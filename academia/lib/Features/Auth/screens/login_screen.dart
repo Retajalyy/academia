@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:academia/Core/utilities/colors.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../controllers/login_controller.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/primary_button.dart';
+import '../widgets/remember_me_row.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -19,14 +21,18 @@ class LoginScreen extends StatelessWidget {
   void handleLogin() {
     if (_formKey.currentState!.validate()) {
       controller.login(
-        userIdController.text,
-        passwordController.text,
+        userIdController.text.trim(),
+        passwordController.text.trim(),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
+    final width = size.width;
+
     return Scaffold(
       backgroundColor: AppColors.primaryBlue,
       body: SafeArea(
@@ -37,8 +43,8 @@ class LoginScreen extends StatelessWidget {
               flex: 3,
               child: Center(
                 child: Container(
-                  width: 180,
-                  height: 180,
+                  width: width * 0.4,
+                  height: width * 0.4,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
@@ -51,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(25),
+                    padding: EdgeInsets.all(width * 0.0),
                     child: Image.asset(
                       "lib/assets/Images/logoo.png",
                       fit: BoxFit.contain,
@@ -61,107 +67,133 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
 
-            /// ⚪ BOTTOM SECTION
+            /// ⚪ FORM CONTAINER
             Expanded(
               flex: 5,
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.symmetric(
+                  horizontal: width * 0.06,
+                  vertical: height * 0.02,
+                ),
                 decoration: const BoxDecoration(
                   color: Color(0xFFF2F2F2),
                   borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(50),
+                    top: Radius.circular(40),
                   ),
                 ),
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// DASH
-                      Center(
-                        child: Container(
-                          width: 50,
-                          height: 5,
-                          margin: const EdgeInsets.only(bottom: 20),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade400,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-
-                      /// WELCOME TEXT
-                      const Text(
-                        "Welcome back",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryBlue,
-                        ),
-                      ),
-
-                      const SizedBox(height: 6),
-
-                      /// SUBTEXT ✅ NOW WILL APPEAR
-                    Text(
-  "Sign in with your saved credential",
-  style: TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    color: Colors.grey.shade600,
-  ),
-),
-                      const SizedBox(height: 25),
-
-                      /// USER ID
-                      CustomTextField(
-                        controller: userIdController,
-                        hint: "User ID",
-                        label: "User ID",
-                        icon: Icons.person,
-                        validator: (v) =>
-                            v == null || v.isEmpty ? "Required" : null,
-                      ),
-
-                      const SizedBox(height: 15),
-
-                      /// PASSWORD
-                      Obx(() {
-                        return CustomTextField(
-                          controller: passwordController,
-                          hint: "Password",
-                          label: "Password",
-                          icon: Icons.lock,
-                          isPassword: controller.obscurePassword.value,
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              controller.obscurePassword.value
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// DASH
+                        Center(
+                          child: Container(
+                            width: width * 0.12,
+                            height: 5,
+                            margin: EdgeInsets.only(bottom: height * 0.02),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade400,
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            onPressed: controller.togglePassword,
                           ),
+                        ),
+
+                        /// TITLE
+                        Text(
+                          "Welcome back",
+                          style: TextStyle(
+                            fontSize: width * 0.055,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryBlue,
+                          ),
+                        ),
+
+                        SizedBox(height: height * 0.008),
+
+                        /// SUBTEXT
+                        Text(
+                          "Sign in with your saved credentials",
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+
+                        SizedBox(height: height * 0.03),
+
+                        /// USER ID
+                        CustomTextField(
+                          controller: userIdController,
+                          hint: "User ID",
+                          label: "User ID",
+                          iconPath: "lib/assets/Icons/userlogin.svg",
                           validator: (v) =>
-                              v == null || v.length < 6
-                                  ? "Min 6 chars"
-                                  : null,
-                        );
-                      }),
+                              v == null || v.isEmpty ? "please enter a valid user ID" : null,
+                        ),
 
-                      const SizedBox(height: 25),
+                        SizedBox(height: height * 0.02),
 
-                      /// LOGIN BUTTON
-                      Obx(() {
-                        return PrimaryButton(
-                          text: controller.isLoading.value
-                              ? "Loading..."
-                              : "Sign in",
-                          onPressed: controller.isLoading.value
-                              ? null
-                              : handleLogin,
-                        );
-                      }),
-                    ],
+                        /// PASSWORD
+                        Obx(() {
+                          return CustomTextField(
+                            controller: passwordController,
+                            hint: "Password",
+                            label: "Password",
+                            iconPath: "lib/assets/Icons/password.svg",
+                            isPassword: controller.obscurePassword.value,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                controller.obscurePassword.value
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
+                              onPressed: controller.togglePassword,
+                            ),
+                            validator: (v) => v == null || v.length < 6
+                                ? "please enter a valid password"
+                                : null,
+                          );
+                        }),
+
+                        SizedBox(height: height * 0.02),
+
+                        /// REMEMBER ME ROW
+                        Obx(() {
+                          return RememberMeRow(
+                            value: controller.rememberMe.value,
+                            onChanged: controller.toggleRememberMe,
+                            onForgotPassword: () {
+                              Get.snackbar(
+                                "Forgot Password",
+                                "Feature not implemented yet",
+                              );
+                            },
+                          );
+                        }),
+
+                        SizedBox(height: height * 0.03),
+
+                        /// LOGIN BUTTON
+                        Obx(() {
+                          return SizedBox(
+                            width: double.infinity,
+                            child: PrimaryButton(
+                              text: controller.isLoading.value
+                                  ? "Loading..."
+                                  : "Sign in",
+                              onPressed: controller.isLoading.value
+                                  ? null
+                                  : handleLogin,
+                            ),
+                          );
+                        }),
+
+                        SizedBox(height: height * 0.02),
+                      ],
+                    ),
                   ),
                 ),
               ),

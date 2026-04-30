@@ -16,7 +16,7 @@ class _MainLayoutState extends State<BottomBar> {
   int currentIndex = 0;
 
   final List<Widget> pages = [
-    const HomePage(),
+     HomePage(),
     const ScheduleScreen(),
     const ServicesMainScreen(),
     const ProfilePage(),

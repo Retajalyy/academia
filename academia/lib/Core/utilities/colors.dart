@@ -30,4 +30,5 @@ class AppColors {
 
   // White (used for text or background)
   static const Color lightblue = Color.fromARGB(255, 199, 208, 235);
+static const Color bottomNav = Color(0xFF000000);
 }

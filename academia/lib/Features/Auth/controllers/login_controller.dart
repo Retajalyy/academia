@@ -8,6 +8,9 @@ class LoginController extends GetxController {
   var isLoading = false.obs;
   var obscurePassword = true.obs;
 
+  /// 🔥 ADD THIS
+  var rememberMe = false.obs;
+
   Future<void> login(String id, String password) async {
     isLoading.value = true;
 
@@ -17,12 +20,15 @@ class LoginController extends GetxController {
 
     if (success) {
       debugPrint("LOGIN SUCCESS: credentials verified for user ID $id");
-      print("LOGIN SUCCESS: credentials verified for user ID $id");
+
+      /// 🔥 OPTIONAL: you can use this later
+      if (rememberMe.value) {
+        debugPrint("User chose to be remembered");
+      }
 
       Get.offAllNamed('/HomePage');
     } else {
       debugPrint("LOGIN FAILED: invalid credentials for user ID $id");
-      print("LOGIN FAILED: invalid credentials for user ID $id");
 
       Get.snackbar("Error", "Invalid credentials");
     }
@@ -30,5 +36,10 @@ class LoginController extends GetxController {
 
   void togglePassword() {
     obscurePassword.value = !obscurePassword.value;
+  }
+
+  /// 🔥 ADD THIS
+  void toggleRememberMe(bool? value) {
+    rememberMe.value = value ?? false;
   }
 }

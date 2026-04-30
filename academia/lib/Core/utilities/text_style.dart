@@ -55,4 +55,15 @@ class TextStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.alertError,
   );
+
+    static const TextStyle title = TextStyle(
+    fontSize: 20,
+   fontWeight: FontWeight.w600,
+   fontFamily: 'Inter', 
+    color: AppColors.primaryText);
+  static const TextStyle mian_title = TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primaryText,
+  );
 }

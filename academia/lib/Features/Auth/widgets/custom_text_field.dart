@@ -1,12 +1,12 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:academia/Core/utilities/colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
   final String label;
-  final IconData icon;
+  final String iconPath;
 
   final bool isPassword;
   final Widget? suffixIcon;
@@ -18,7 +18,7 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     required this.hint,
     required this.label,
-    required this.icon,
+    required this.iconPath,
     this.isPassword = false,
     this.suffixIcon,
     this.validator,
@@ -27,62 +27,99 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      obscureText: isPassword,
-      keyboardType: keyboardType,
-      validator: validator,
+    final width = MediaQuery.of(context).size.width;
 
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
-
-        prefixIcon: Icon(icon, color: AppColors.primaryBlue),
-        suffixIcon: suffixIcon,
-
-        filled: true,
-        fillColor: Colors.white,
-
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 15,
-        ),
-
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: Colors.grey.shade300,
-          ),
-        ),
-
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        /// LABEL
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: width * 0.035,
+            fontWeight: FontWeight.w500,
             color: AppColors.primaryBlue,
-            width: 1.5,
           ),
         ),
 
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            color: Colors.red,
-          ),
-        ),
+        SizedBox(height: width * 0.015),
 
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1.5,
+        /// FIELD
+        TextFormField(
+          controller: controller,
+          obscureText: isPassword,
+          keyboardType: keyboardType,
+          validator: validator,
+
+          style: TextStyle(fontSize: width * 0.04),
+
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(
+              color: Colors.grey.shade500,
+              fontSize: width * 0.038,
+            ),
+
+            /// ✅ FIXED SVG ICON
+            prefixIcon: Padding(
+              padding: EdgeInsets.all(width * 0.03),
+              child: SvgPicture.asset(
+                iconPath,
+                width: width * 0.05,
+                height: width * 0.05,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.disabledText,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+
+            suffixIcon: suffixIcon,
+
+            filled: true,
+            fillColor: Colors.white,
+
+            contentPadding: EdgeInsets.symmetric(
+              vertical: width * 0.045,
+              horizontal: width * 0.02,
+            ),
+
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+              borderSide: BorderSide.none,
+            ),
+
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+              borderSide: BorderSide(
+                color: Colors.grey.shade300,
+                width: 1,
+              ),
+            ),
+
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+              borderSide: const BorderSide(
+                color: AppColors.primaryBlue,
+                width: 1.8,
+              ),
+            ),
+
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+              borderSide: const BorderSide(
+                color: Colors.red,
+                width: 1.5,
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

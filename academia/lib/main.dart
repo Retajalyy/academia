@@ -1,5 +1,10 @@
+import 'package:academia/Features/Academic_results(courses)/screens/AcademicResultCourseScreen.dart';
+import 'package:academia/Features/Academic_results/screens/Academic_results_screen.dart';
+import 'package:academia/Features/Assessments/screens/AssessmentScreen.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
-import 'package:academia/Features/schedule/screens/schedule_screen.dart';
+import 'package:academia/Features/exam_schedule/screens/exam_Schedule_screen2.dart';
+import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen.dart';
+import 'package:academia/Features/profile/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -55,6 +60,26 @@ class MyApp extends StatelessWidget {
           page: () => SplashScreen(),
         ),
         GetPage(
+          name: '/academicresultscourses',
+          page: () => AcademicResultsCourseScreen(),
+        ),
+        GetPage(
+          name: '/academicresults',
+          page: () => AcademicResultsScreen(),
+        ),
+        GetPage(
+          name: '/noexam',
+          page: () => ExamScheduleScreen(),
+        ),
+        GetPage(
+          name: '/exam',
+          page: () => ExamScheduleScreen2(),
+        ),
+        GetPage(
+          name: '/assesments',
+          page: () => Assessmentscreen(),
+        ),
+        GetPage(
           name: '/login',
           page: () => LoginScreen(),
         ),
@@ -63,8 +88,8 @@ class MyApp extends StatelessWidget {
           page: () => HomePage(),
         ),
         GetPage(
-          name: '/Schedule',
-          page: () => ScheduleScreen(),
+          name: '/profile',
+          page: () => ProfilePage(),
         ),
       ],
     );

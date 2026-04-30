@@ -1,28 +1,17 @@
 import 'package:academia/Core/utilities/colors.dart';
-import 'package:academia/Features/Auth/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SplashScreen extends StatefulWidget {
+import '../controllers/splash_controller.dart';
+
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-
-  @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(const Duration(seconds: 3), () {
-      Get.to(LoginScreen());
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // inject controller once
+    Get.put(SplashController());
+
     return Scaffold(
       backgroundColor: AppColors.lightblue,
       body: Center(
@@ -32,11 +21,14 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Stack(
             alignment: Alignment.center,
             children: [
+              
+              // background image
               Image.asset(
                 'lib/assets/Images/partA.png',
                 width: 400,
               ),
 
+              // animated foreground
               TweenAnimationBuilder<double>(
                 duration: const Duration(milliseconds: 2000),
                 curve: Curves.easeOutCubic,

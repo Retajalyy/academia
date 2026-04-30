@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
 import '../services/auth_service.dart';
 
 class LoginController extends GetxController {
@@ -7,16 +8,22 @@ class LoginController extends GetxController {
   var isLoading = false.obs;
   var obscurePassword = true.obs;
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(String id, String password) async {
     isLoading.value = true;
 
-    final success = await _auth.login(email, password);
+    final success = await _auth.login(id, password);
 
     isLoading.value = false;
 
     if (success) {
-      Get.offAllNamed('/home');
+      debugPrint("LOGIN SUCCESS: credentials verified for user ID $id");
+      print("LOGIN SUCCESS: credentials verified for user ID $id");
+
+      Get.offAllNamed('/HomePage');
     } else {
+      debugPrint("LOGIN FAILED: invalid credentials for user ID $id");
+      print("LOGIN FAILED: invalid credentials for user ID $id");
+
       Get.snackbar("Error", "Invalid credentials");
     }
   }

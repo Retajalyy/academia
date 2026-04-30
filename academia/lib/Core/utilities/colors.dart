@@ -7,7 +7,7 @@ class AppColors {
 
   // Text Colors
   static const Color primaryText = Color(0xFF0C4D83); // Titles, main info, names
-  static const Color secondaryText = Color(0xFF5D5D5D); // Subtext, descriptions
+  static const Color darkgrey = Color(0x000ef2f0); // Subtext, descriptions
   static const Color disabledText = Color(0xFFA0A0A0); // Placeholders, inactive fields
 
   // Accent Colors (for courses)
@@ -29,5 +29,5 @@ class AppColors {
   static const Color alertError = Color(0xFFFF4C4C); // Errors, warnings, notifications
 
   // White (used for text or background)
-  static const Color lightblue = Color(0xFFF1F4FC);
+  static const Color lightblue = Color.fromARGB(255, 199, 208, 235);
 }

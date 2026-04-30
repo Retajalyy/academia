@@ -1,54 +1,70 @@
+import 'package:academia/Features/Splash/screens/splash_screen.dart';
+import 'package:academia/Features/schedule/screens/schedule_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'Features/Auth/screens/login_screen.dart';
+import 'core/services/supabase_service.dart';
+import 'Core/utilities/colors.dart'; 
+import 'features/auth/screens/login_screen.dart';
+import 'features/home/screens/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// 🌐 Initialize Supabase (Auth + Database)
-  await Supabase.initialize(
-    url: 'https://fwyixcaqfhveqzjmgnuq.supabase.co',
-    anonKey: 'sb_publishable_Io9J4NS26dKLj0gTKFk-sA_f1MRN97T',
-  );
+  await SupabaseService.init();
 
-  runApp(const AcademiaApp());
+  runApp(const MyApp());
 }
 
-class AcademiaApp extends StatelessWidget {
-  const AcademiaApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Academia',
       debugShowCheckedModeBanner: false,
 
-      /// 🎨 Theme
+      // ✅ GLOBAL THEME
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.lightblue,
+
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.primaryBlue,
+          primary: AppColors.primaryBlue,
+        ),
+
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+        ),
+
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
       ),
 
-      /// 🚀 Start screen
-      initialRoute: '/login',
+      // 👇 start from splash instead of home
+      initialRoute: '/splash',
 
-      /// 🧭 Routes (scalable navigation)
+      // 👇 routes
       getPages: [
+        GetPage(
+          name: '/splash',
+          page: () => SplashScreen(),
+        ),
         GetPage(
           name: '/login',
           page: () => LoginScreen(),
         ),
-
-        /// 🔥 placeholder home (replace later)
         GetPage(
-          name: '/home',
-          page: () => const Scaffold(
-            body: Center(
-              child: Text("Home Screen"),
-            ),
-          ),
+          name: '/HomePage',
+          page: () => HomePage(),
+        ),
+        GetPage(
+          name: '/Schedule',
+          page: () => ScheduleScreen(),
         ),
       ],
     );

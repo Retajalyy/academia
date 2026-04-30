@@ -19,7 +19,7 @@ class TextStyles {
   static const TextStyle subtitle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w500,
-    color: AppColors.secondaryText,
+    color: AppColors.darkgrey,
   );
 
   // Body text
@@ -32,7 +32,7 @@ class TextStyles {
   static const TextStyle bodySecondary = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.normal,
-    color: AppColors.secondaryText,
+    color: AppColors.darkgrey,
   );
 
   // Small text, hints, placeholders

@@ -3,12 +3,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AuthService {
   final supabase = Supabase.instance.client;
 
-  /// 🔐 Login باستخدام University ID
+
   Future<bool> login(String uniId, String password) async {
     try {
       // 1. Get email using uni_id
       final userData = await supabase
-          .from('users')
+          .from('profiles')
           .select('email')
           .eq('uni_id', uniId)
           .maybeSingle();

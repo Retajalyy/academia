@@ -1,6 +1,7 @@
 import 'package:academia/Features/Academic_results(courses)/screens/AcademicResultCourseScreen.dart';
 import 'package:academia/Features/Academic_results/screens/Academic_results_screen.dart';
 import 'package:academia/Features/Assessments/screens/AssessmentScreen.dart';
+import 'package:academia/Features/Home/controllers/home_controller.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
 import 'package:academia/Features/exam_schedule/screens/exam_Schedule_screen2.dart';
 import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen.dart';
@@ -17,6 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await SupabaseService.init();
+  Get.put(HomeController());
 
   runApp(const MyApp());
 }

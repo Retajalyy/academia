@@ -1,43 +1,34 @@
-import 'package:academia/Features/Home/models/user_model.dart';
+import 'package:academia/Features/Home/models/assignment_model.dart';
+import 'package:academia/Features/Home/models/schedule_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../models/class_model.dart';
-import '../models/assignment_model.dart';
-import '../services/home_service.dart';
-
 
 class HomeController extends GetxController {
-  final HomeService service = HomeService();
+  var userName = "Mariam Ibrahim".obs;
+  var nextClass = ScheduleItem(title: "Cloud Computing", time: "09:00 - 11:00", location: "Room B1", instructor: "Dr. Youssef", type: "Lecture").obs;
+var assignments = <Assignment>[].obs;
 
-  var isLoading = true.obs;
 
-  var user = Rxn<UserModel>();
-  var classes = <ClassModel>[].obs;
-  var assignments = <AssignmentModel>[].obs;
+  // List of schedule items for the day
+  var dailySchedule = <ScheduleItem>[].obs;
 
   @override
   void onInit() {
-    fetchHome();
     super.onInit();
+    loadSchedule();
   }
-
-  Future<void> fetchHome() async {
-    try {
-      isLoading(true);
-
-      final data = await service.fetchHomeData("USER_ID");
-
-      user.value = UserModel.fromJson(data['user']);
-
-      classes.value = (data['classes'] as List)
-          .map((e) => ClassModel.fromJson(e))
-          .toList();
-
-      assignments.value = (data['assignments'] as List)
-          .map((e) => AssignmentModel.fromJson(e))
-          .toList();
-
-    } finally {
-      isLoading(false);
-    }
+void loadAssignments() {
+  assignments.addAll([
+    Assignment(title: "Assignment 3", course: "Cloud Computing", dueDate: "Today", icon: Icons.note_add_outlined, color: Colors.red),
+    Assignment(title: "Quiz 2", course: "Digital Marketing", dueDate: "Tomorrow", icon: Icons.assignment_turned_in_outlined, color: Colors.amber),
+    Assignment(title: "Research submitting", course: "Technical Writing", dueDate: "Apr 12", icon: Icons.attachment_outlined, color: Colors.blue),
+  ]);
+}
+  void loadSchedule() {
+    // This would eventually come from your Service
+    dailySchedule.addAll([
+      ScheduleItem(title: "Cloud Computing", time: "09:00 - 11:00", location: "Room B1", instructor: "Dr. Youssef Senousy", type: "Lecture"),
+      ScheduleItem(title: "Introduction to AI", time: "09:00 - 11:00", location: "Lab 1", instructor: "Mr. Ahmed Mohamed", type: "Section"),
+    ]);
   }
 }

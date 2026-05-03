@@ -14,7 +14,7 @@ class ScheduleScreen extends StatefulWidget {
  
 class _ScheduleScreenState extends State<ScheduleScreen> {
   DateTime _selectedDate = DateTime(2025, 9, 9);
-  int _currentNavIndex = 1;
+  
  
   // Mock classes data
   final List<ClassModel> _classes = const [

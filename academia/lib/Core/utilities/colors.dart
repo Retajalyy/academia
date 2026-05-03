@@ -35,4 +35,7 @@ static const Color bottomNav = Color(0xFF000000);
 static const Color darkgrey2 = Color(0xFF6B7280); // ✅ proper grey
 static const Color accentProgramming1 = Color(0xFF0C4D83);
  static const Color accentAI = Color(0xFFFFC258);
+ //fail
+ static const Color fail = Color(0xFFA60A0A);
+ static const Color assignmentColor = Color(0xFFB18334);
 }

@@ -1,6 +1,8 @@
 import 'package:academia/Features/Academic_results/screens/AcademicResultCourseScreen.dart';
 import 'package:academia/Features/Academic_results/screens/Academic_results_screen.dart';
 import 'package:academia/Features/Assessments/screens/AssessmentScreen.dart';
+import 'package:academia/Features/Course%20details/screens/CourseScreendetails.dart';
+import 'package:academia/Features/Course/screens/CourseScreen.dart';
 import 'package:academia/Features/Home/controllers/home_controller.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
 import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen2.dart';
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 👇 start from splash instead of home
-      initialRoute: '/assesments',
+      initialRoute: '/schedule',
 
       // 👇 routes
       getPages: [
@@ -97,6 +99,14 @@ class MyApp extends StatelessWidget {
          GetPage(
           name: '/schedule',
           page: () => ScheduleScreen(),
+        ),
+         GetPage(
+          name: '/course',
+          page: () => CourseScreen(),
+        ),
+         GetPage(
+          name: '/coursedetails',
+          page: () => CourseScreenDetails(),
         ),
       ],
     );

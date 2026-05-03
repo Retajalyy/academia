@@ -31,4 +31,8 @@ class AppColors {
   // White (used for text or background)
   static const Color lightblue = Color.fromARGB(255, 199, 208, 235);
 static const Color bottomNav = Color(0xFF000000);
+//schedule part
+static const Color darkgrey2 = Color(0xFF6B7280); // ✅ proper grey
+static const Color accentProgramming1 = Color(0xFF0C4D83);
+ static const Color accentAI = Color(0xFFFFC258);
 }

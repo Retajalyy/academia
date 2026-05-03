@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../Core/utilities/colors.dart';
-import 'package:academia/Features/Academic_results(courses)/screens/AcademicResultCourseScreen.dart';
+import 'package:academia/Features/Academic_results/screens/AcademicResultCourseScreen.dart';
 
 class ResultSemesterCard extends StatelessWidget {
   final String status;

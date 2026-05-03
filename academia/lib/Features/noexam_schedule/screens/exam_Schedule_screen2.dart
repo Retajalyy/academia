@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import '../widgets/exam_header.dart';
-import '../widgets/bottom_nav.dart';
 import '../widgets/exam_card.dart';
-import '../widgets/section_title.dart'; // ✅ ADD THIS
 import '../../../Core/utilities/colors.dart';
 
 class ExamScheduleScreen2 extends StatelessWidget {
   const ExamScheduleScreen2({super.key});
+
+  /// 🔥 Local Section Title Widget (replacement)
+  Widget sectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color:  Color(0xFF908C8C),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,28 +37,24 @@ class ExamScheduleScreen2 extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
                   color: AppColors.screenBackground,
-                  
                 ),
 
                 child: ListView(
-                  children: const [
+                  children: [
                     // 🔶 Highlighted
-                    ExamCard(
+                    const ExamCard(
                       isHighlighted: true,
                       title: "Midterms exams period",
                       subtitle: "April 23 - May 1, 2026",
-                    
                     ),
 
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                    // ✅ SECTION TITLE ADDED HERE
-                    SectionTitle(title: "Next Exam"),
+                    // ✅ NEXT EXAM
+                    sectionTitle("Next Exam"),
+                    const SizedBox(height: 12),
 
-                    SizedBox(height: 12),
-
-                    // 🔵 Next Exam
-                    ExamCard(
+                    const ExamCard(
                       date: "24",
                       month: "APR",
                       title: "Cloud Computing",
@@ -54,14 +63,13 @@ class ExamScheduleScreen2 extends StatelessWidget {
                       isNext: true,
                     ),
 
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                    // ⚪ Upcoming SECTION
-                    SectionTitle(title: "Upcoming "),
+                    // UPCOMING
+                    sectionTitle("Upcoming"),
+                    const SizedBox(height: 12),
 
-                    SizedBox(height: 12),
-
-                    ExamCard(
+                    const ExamCard(
                       date: "25",
                       month: "APR",
                       title: "Internet of Things",
@@ -69,14 +77,13 @@ class ExamScheduleScreen2 extends StatelessWidget {
                       room: "Room 5B",
                     ),
 
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                    // ⚫ Completed SECTION
-                    SectionTitle(title: "Completed"),
+                    // COMPLETED
+                    sectionTitle("Completed"),
+                    const SizedBox(height: 12),
 
-                    SizedBox(height: 12),
-
-                    ExamCard(
+                    const ExamCard(
                       date: "23",
                       month: "APR",
                       title: "Introduction to AI",
@@ -92,7 +99,19 @@ class ExamScheduleScreen2 extends StatelessWidget {
         ),
       ),
 
-      bottomNavigationBar: const BottomNav(),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: AppColors.screenBackground,
+        selectedItemColor: const Color(0xFF2D4B94),
+        unselectedItemColor: Colors.grey,
+        currentIndex: 2,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
+          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
+        ],
+      ),
     );
   }
 }

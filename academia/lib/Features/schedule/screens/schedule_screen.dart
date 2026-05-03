@@ -4,7 +4,6 @@ import '../../../Core/utilities/text_style.dart';
 import 'package:academia/Features/Schedule/model/class_model.dart';
 import '../widgets/calendar.dart';
 import '../widgets/class_card.dart';
-import '../widgets/bottom_nav.dart';
  
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({Key? key}) : super(key: key);
@@ -26,7 +25,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       startTime: '8:00',
       endTime: '9:30',
       type: 'Lecture',
-      accentColor: AppColors.accentProgramming,
+      accentColor: AppColors.accentProgramming1,
     ),
     ClassModel(
       title: 'Introduction to AI',
@@ -35,7 +34,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       startTime: '9:30',
       endTime: '11:00',
       type: 'Section',
-      accentColor: AppColors.secondaryYellow,
+      accentColor: AppColors.accentAI,
     ),
     ClassModel(
       title: 'Data Structures',
@@ -44,7 +43,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       startTime: '11:00',
       endTime: '12:30',
       type: 'Lecture',
-      accentColor: AppColors.accentDataStructures,
+      accentColor: AppColors.accentProgramming1,
     ),
   ];
  
@@ -52,10 +51,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.screenBackground,
-      bottomNavigationBar: BottomNavBarWidget(
-        currentIndex: _currentNavIndex,
-        onTap: (index) => setState(() => _currentNavIndex = index),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -76,6 +71,19 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             ],
           ),
         ),
+      ),
+            bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFF2D4B94),
+        backgroundColor: AppColors.screenBackground,
+        unselectedItemColor: Colors.grey,
+        currentIndex: 1,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
+          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
+        ],
       ),
     );
   }

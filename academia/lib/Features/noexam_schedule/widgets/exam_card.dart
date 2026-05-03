@@ -29,6 +29,7 @@ class ExamCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// 🎨 Background Logic
     Color bgColor = AppColors.cardBackground;
 
     if (isHighlighted) {
@@ -37,14 +38,16 @@ class ExamCard extends StatelessWidget {
       bgColor = const Color(0xFFF7F7F7);
     }
 
+    /// 🔍 FIXED Midterm detection
     bool isMidtermExam =
         title.toLowerCase().contains('midterm') ||
-        title.toLowerCase().contains('mid terms');
+        title.toLowerCase().contains('midterms');
 
+    /// 🔵 Border for next exam (Cloud Computing)
     bool isCloudComputing = title == "Cloud Computing";
 
     return Opacity(
-      opacity: isCompleted ? 0.5 : 1.0,
+      opacity: isCompleted ? 0.7 : 1.0, // ✅ better visibility
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
@@ -58,28 +61,19 @@ class ExamCard extends StatelessWidget {
                 )
               : null,
 
-          boxShadow: isHighlighted
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    offset: const Offset(0, 3),
-                  ),
-                ]
-              : [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(isHighlighted ? 0.15 : 0.06),
+              blurRadius: isHighlighted ? 5 : 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
 
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 📅 DATE SECTION (UNCHANGED)
+            /// 📅 DATE
             if (date != null)
               SizedBox(
                 width: 60,
@@ -94,7 +88,9 @@ class ExamCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       month ?? "",
-                      style: TextStyles.caption,
+                      style: TextStyles.caption.copyWith(
+                        color: Colors.grey,
+                      ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 8),
@@ -108,44 +104,49 @@ class ExamCard extends StatelessWidget {
 
             if (date != null) const SizedBox(width: 12),
 
-            // 📄 CONTENT
+            /// 📄 CONTENT
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  /// 🔝 TITLE ROW
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      /// 🧾 ICON (SAFE)
                       if (isMidtermExam)
                         Container(
                           margin: const EdgeInsets.only(right: 8),
                           child: Image.asset(
                             'assets/images/exam_icon.png',
-                            width: 45,
-                            height: 45,
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.contain,
                             errorBuilder: (context, error, stackTrace) {
                               return const Icon(
                                 Icons.assignment,
-                                size: 35,
+                                size: 30,
                                 color: AppColors.primaryBlue,
                               );
                             },
                           ),
                         ),
 
+                      /// 📝 TITLE + SUBTITLE
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // 🔵 TITLE
                             Text(
                               title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyles.title.copyWith(
+                                color: AppColors.primaryBlue, // ✅ FIXED visibility
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
 
-                            // 🔵 SUBTITLE ONLY UNDER MIDTERM TITLE
                             if (isMidtermExam && subtitle != null)
                               Padding(
                                 padding: const EdgeInsets.only(top: 4),
@@ -160,6 +161,7 @@ class ExamCard extends StatelessWidget {
                         ),
                       ),
 
+                      /// 🔵 Tomorrow badge
                       if (isNext)
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -170,11 +172,11 @@ class ExamCard extends StatelessWidget {
                             color: AppColors.lightblue,
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Tomorrow",
                             style: TextStyle(
                               color: AppColors.primaryText,
-                              fontSize: 13,
+                              fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -182,25 +184,41 @@ class ExamCard extends StatelessWidget {
                     ],
                   ),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 3),
 
+                  /// ⏰ TIME
                   if (time != null)
                     Row(
                       children: [
-                        const Icon(Icons.access_time, size: 14),
+                        const Icon(Icons.access_time,
+                            size: 14, color: Colors.grey),
                         const SizedBox(width: 5),
-                        Text(time!, style: TextStyles.bodySecondary),
+                        
+                        Text(
+                          time!,
+                          style: TextStyles.bodySecondary.copyWith(
+                            color: Colors.grey[700],
+                          ),
+                        ),
                       ],
                     ),
 
-                  const SizedBox(height: 4),
-
+                  const SizedBox(height: 25),
+                       
+                  /// 📍 ROOM
                   if (room != null)
+                  
                     Row(
                       children: [
-                        const Icon(Icons.location_on, size: 14),
+                        const Icon(Icons.location_on,
+                            size: 14, color: Colors.grey),
                         const SizedBox(width: 5),
-                        Text(room!, style: TextStyles.bodySecondary),
+                        Text(
+                          room!,
+                          style: TextStyles.bodySecondary.copyWith(
+                            color: Colors.grey[700],
+                          ),
+                        ),
                       ],
                     ),
                 ],

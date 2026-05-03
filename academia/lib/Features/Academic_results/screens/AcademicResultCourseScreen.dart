@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/academic_results_header.dart';
-import '../widgets/bottom_nav.dart';
 import '../widgets/semster_result.dart';
 import '../widgets/semster_header.dart'; // 👈 added
 
@@ -44,7 +43,19 @@ class AcademicResultsCourseScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNav(),
+            bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFF2D4B94),
+        backgroundColor: AppColors.screenBackground,
+        unselectedItemColor: Colors.grey,
+        currentIndex: 2,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
+          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
+        ],
+      ),
     );
   }
 }

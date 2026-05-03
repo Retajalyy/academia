@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/academic_results_header.dart';
-import '../widgets/bottom_nav.dart';
 import '../widgets/gpa_card.dart';
 import '../../../Core/utilities/colors.dart';
 import 'package:academia/Features/Academic_results/widgets/result_semseter.dart';
@@ -115,7 +114,19 @@ class AcademicResultsScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNav(),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: AppColors.screenBackground,
+        selectedItemColor: const Color(0xFF2D4B94),
+        unselectedItemColor: Colors.grey,
+        currentIndex: 2,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
+          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
+        ],
+      ),
     );
   }
 }

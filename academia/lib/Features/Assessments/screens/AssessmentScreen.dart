@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/Assessment_headr.dart';
-import '../widgets/bottom_nav.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/stats_card.dart';
 import '../widgets/course_card.dart';
@@ -118,7 +117,19 @@ class Assessmentscreen extends StatelessWidget {
       ),
 
       /// 🔻 BOTTOM NAV
-      bottomNavigationBar: const BottomNav(),
+            bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: AppColors.screenBackground,
+        selectedItemColor: const Color(0xFF2D4B94),
+        unselectedItemColor: Colors.grey,
+        currentIndex: 2,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
+          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
+        ],
+      ),
     );
   }
 }

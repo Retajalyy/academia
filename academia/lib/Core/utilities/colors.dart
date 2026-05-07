@@ -38,4 +38,15 @@ static const Color accentProgramming1 = Color(0xFF0C4D83);
  //fail
  static const Color fail = Color(0xFFA60A0A);
  static const Color assignmentColor = Color(0xFFB18334);
+ static const Color greytext= Color(0xFFDEDEDE);
+ static const mainGreen = Color(0xFF078222);
+    static const darkGreen = Color(0xFF07704F);
+    static const lightGreen = Color(0xFFE1F5EF);
+//backgroundbabyblue
+ static const babyblue = Color(0xFFF1F4FC);
+ //cardtexts
+  static const textgrey = Color(0xFF908C8C);
+ 
+
+
 }

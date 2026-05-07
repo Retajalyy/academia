@@ -10,7 +10,7 @@ class ExamScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.screenBackground,
+      backgroundColor: AppColors.babyblue,
 
       body: SafeArea(
         child: Column(
@@ -45,7 +45,7 @@ class ExamScheduleScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xFF2D4B94),
-        backgroundColor: AppColors.screenBackground,
+        backgroundColor: AppColors.babyblue,
         unselectedItemColor: Colors.grey,
         currentIndex: 2,
         items: const [

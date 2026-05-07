@@ -1,11 +1,13 @@
+import 'package:academia/Features/Payement/widgets/pay.dart';
 import 'package:flutter/material.dart';
-import '../widgets/course_headr.dart';
-import '../widgets/course_stat.dart';
-import '../widgets/material_list.dart';
+import 'package:academia/Features/Payement/widgets/PayementHeader.dart';
 import '../../../Core/utilities/colors.dart';
+import 'package:academia/Features/Payement/widgets/payment_method.dart';
+import 'package:academia/Features/Payement/widgets/card_details.dart';
+import 'package:academia/Features/Payement/widgets/order_summary.dart';
 
-class CourseScreenDetails extends StatelessWidget {
-  const CourseScreenDetails({super.key});
+class PayementScreen extends StatelessWidget {
+  const PayementScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,36 +17,32 @@ class CourseScreenDetails extends StatelessWidget {
         child: Column(
           children: [
             /// 🔵 HEADER
-            const CourseHeaderDetails(),
+            const PayementHeader(),
 
             /// 🔵 BODY
-            Expanded(
+              Expanded(
               child: Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   color: AppColors.babyblue,
                 ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 0,
-                    vertical: 12,
-                  ),
-                  child: Column(
+                child: const SingleChildScrollView(
+                  padding: EdgeInsets.all(16),
+                  child: Column( // ✅ wrap in Column
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// 📊 COURSE STATS
-                      const CourseStats(),
+                      PaymentMethodCard(),
+                      SizedBox(height: 20),
+                      CardDetailsForm(),
+                      SizedBox(height: 20),
+                      OrderSummary(),
+                      SizedBox(height: 20),
+                      PayButton()
 
-                      const SizedBox(height: 20),
-
-                      /// 📁 COURSE MATERIAL
-                      const CourseMaterialList(),
-
-                      const SizedBox(height: 20),
                     ],
                   ),
-                ),
               ),
+             ),
             ),
           ],
         ),

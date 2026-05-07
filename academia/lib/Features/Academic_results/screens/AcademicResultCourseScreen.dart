@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/academic_results_header.dart';
+import '../widgets/academic_results_header2.dart';
 import '../widgets/semster_result.dart';
 import '../widgets/semster_header.dart'; // 👈 added
 
@@ -15,14 +15,14 @@ class AcademicResultsCourseScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const AcademicResultsHeader(),
+            const AcademicHeader(),
 
             Expanded(
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
-                  color: AppColors.screenBackground,
+                  color: AppColors.babyblue,
                 ),
                 child: ListView(
                   children: const [
@@ -46,7 +46,7 @@ class AcademicResultsCourseScreen extends StatelessWidget {
             bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xFF2D4B94),
-        backgroundColor: AppColors.screenBackground,
+        backgroundColor: AppColors.babyblue,
         unselectedItemColor: Colors.grey,
         currentIndex: 2,
         items: const [

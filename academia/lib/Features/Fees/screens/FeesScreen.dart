@@ -1,11 +1,13 @@
+import 'package:academia/Features/Fees/widgets/pay_button.dart';
 import 'package:flutter/material.dart';
-import '../widgets/course_headr.dart';
-import '../widgets/course_stat.dart';
-import '../widgets/material_list.dart';
+import 'package:academia/Features/Fees/widgets/Fees_headr.dart';
+import 'package:academia/Features/Fees/widgets/DueFee_card.dart';
+import 'package:academia/Features/Fees/widgets/Paid_Fees.dart'; // ✅ add this
+
 import '../../../Core/utilities/colors.dart';
 
-class CourseScreenDetails extends StatelessWidget {
-  const CourseScreenDetails({super.key});
+class Feesscreen extends StatelessWidget {
+  const Feesscreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class CourseScreenDetails extends StatelessWidget {
         child: Column(
           children: [
             /// 🔵 HEADER
-            const CourseHeaderDetails(),
+            const FeesHeader(),
 
             /// 🔵 BODY
             Expanded(
@@ -24,23 +26,16 @@ class CourseScreenDetails extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: AppColors.babyblue,
                 ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 0,
-                    vertical: 12,
-                  ),
-                  child: Column(
+                child: const SingleChildScrollView(
+                  padding: EdgeInsets.all(16),
+                  child: Column( // ✅ wrap in Column
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// 📊 COURSE STATS
-                      const CourseStats(),
-
-                      const SizedBox(height: 20),
-
-                      /// 📁 COURSE MATERIAL
-                      const CourseMaterialList(),
-
-                      const SizedBox(height: 20),
+                      DueFeeCard(),
+                      SizedBox(height: 20), // spacing
+                      PaidFeeCard(), // ✅ added here
+                      SizedBox(height: 20), 
+                      PayButton(),
                     ],
                   ),
                 ),

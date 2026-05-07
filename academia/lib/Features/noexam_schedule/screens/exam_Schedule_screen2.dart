@@ -36,7 +36,7 @@ class ExamScheduleScreen2 extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
-                  color: AppColors.screenBackground,
+                  color: AppColors.babyblue,
                 ),
 
                 child: ListView(
@@ -101,7 +101,7 @@ class ExamScheduleScreen2 extends StatelessWidget {
 
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.screenBackground,
+        backgroundColor: AppColors.babyblue,
         selectedItemColor: const Color(0xFF2D4B94),
         unselectedItemColor: Colors.grey,
         currentIndex: 2,

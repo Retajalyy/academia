@@ -7,11 +7,16 @@ import 'package:academia/Features/Fees/screens/FeesScreen.dart';
 import 'package:academia/Features/Home/controllers/home_controller.dart';
 import 'package:academia/Features/Payement%20status/screens/PayementStatusScreen.dart';
 import 'package:academia/Features/Payement/screens/PayementScreen.dart';
+import 'package:academia/Features/Registiration_admin/screens/NoRegistirationScreen.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
 import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen2.dart';
 import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen.dart';
 import 'package:academia/Features/profile/screens/profile_page.dart';
 import 'package:academia/Features/schedule/screens/schedule_screen.dart';
+import 'Features/Dashboard_admin/screens/Dashboard_screen.dart';
+import 'Features/AccountSettings_admin/screens/AccountSettingScreen.dart';
+import 'Features/plan_admin/screens/PlanAdminScreen.dart';
+import 'Features/Registiration_admin/screens/RegistirationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -59,7 +64,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 👇 start from splash instead of home
-      initialRoute: '/noexam',
+      initialRoute: '/planAdmin1',
 
       // 👇 routes
       getPages: [
@@ -122,6 +127,26 @@ class MyApp extends StatelessWidget {
          GetPage(
           name: '/Payementstatus',
           page: () => PaymentSuccessScreen(),
+        ),
+        GetPage(
+          name: '/Dashboard',
+          page: () => DashboardScreen(),
+        ),
+        GetPage(
+          name: '/AccountSettings',
+          page: () => AccountSettingsScreen(),
+        ),
+         GetPage(
+          name: '/NoregistirationAdmin',
+          page: () => NoRegistrationScreen(),
+        ),
+          GetPage(
+          name: '/registirationAdmin',
+          page: () => RegistrationScreen(), 
+        ),
+         GetPage(
+          name: '/planAdmin1',
+          page: () => Planadminscreen1(), 
         ),
       ],
     );

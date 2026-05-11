@@ -1,4 +1,3 @@
-import 'package:academia/Features/Course/screens/CourseScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:academia/Features/Course details/screens/CourseScreendetails.dart';

@@ -40,6 +40,7 @@ class AcademicResultsHeader extends StatelessWidget {
               style: TextStyles.header2.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
+                fontSize: 30
               ),
             ),
 
@@ -50,6 +51,7 @@ class AcademicResultsHeader extends StatelessWidget {
               "Final exam results • All semesters",
               style: TextStyles.caption.copyWith(
                 color: const Color(0xFFDEDEDE),
+                fontSize: 15,
               ),
             ),
           ],

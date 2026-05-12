@@ -31,4 +31,23 @@ class AppColors {
   // White (used for text or background)
   static const Color lightblue = Color.fromARGB(255, 199, 208, 235);
 static const Color bottomNav = Color(0xFF000000);
+//schedule part
+static const Color darkgrey2 = Color(0xFF6B7280); // ✅ proper grey
+static const Color accentProgramming1 = Color(0xFF0C4D83);
+ static const Color accentAI = Color(0xFFFFC258);
+ //fail
+ static const Color fail = Color(0xFFA60A0A);
+ static const Color assignmentColor = Color(0xFFB18334);
+ static const Color greytext= Color(0xFFDEDEDE);
+ static const mainGreen = Color(0xFF078222);
+    static const darkGreen = Color(0xFF07704F);
+    static const lightGreen = Color(0xFFE1F5EF);
+//backgroundbabyblue
+ static const babyblue = Color(0xFFF1F4FC);
+ //cardtexts
+  static const textgrey = Color(0xFF908C8C);
+   static const smalltext = Color(0xFF848282);
+
+
+
 }

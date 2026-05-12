@@ -37,6 +37,7 @@ class AssessmentHeader extends StatelessWidget {
                 style: TextStyles.header2.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
+                  fontSize: 30,
                 ),
               ),
 
@@ -47,6 +48,7 @@ class AssessmentHeader extends StatelessWidget {
                 "Track your midterm and participation results",
                 style: TextStyles.caption.copyWith(
                   color: Color(0xFFDEDEDE),
+                  fontSize: 15
                 ),
               ),
             ],

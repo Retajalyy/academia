@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-
+import 'package:academia/Features/Course details/screens/CourseScreendetails.dart';
 import '../../../Core/utilities/colors.dart';
 import '../../../Core/utilities/text_style.dart';
 import 'package:academia/Features/Academic_results/screens/Academic_results_screen.dart';
@@ -107,7 +107,13 @@ class WhileWaitingCard extends StatelessWidget {
                               style: linkStyle,
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  debugPrint("Courses clicked");
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          const CourseScreenDetails(),
+                                    ),
+                                  );
                                 },
                             ),
                             const TextSpan(text: " section"),

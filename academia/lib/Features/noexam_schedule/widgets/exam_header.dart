@@ -37,6 +37,7 @@ class ExamHeader extends StatelessWidget {
               style: TextStyles.header2.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
+                fontSize: 30,
               ),
             ),
 
@@ -47,6 +48,7 @@ class ExamHeader extends StatelessWidget {
               "Review your scheduled exams and timings",
               style: TextStyles.caption.copyWith(
                 color: const Color(0xFFDEDEDE),
+                fontSize: 15,
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

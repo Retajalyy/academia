@@ -4,7 +4,7 @@ import 'colors.dart';
 class TextStyles {
   // Main headers (e.g., app bar titles, big sections)
   static const TextStyle header1 = TextStyle(
-    fontSize: 28,
+    fontSize: 33,
     fontWeight: FontWeight.bold,
     color: AppColors.primaryText,
   );
@@ -66,4 +66,26 @@ class TextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.primaryText,
   );
+  //course doctors-date-room
+  static const TextStyle doctor = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: Color(0xFF848282),
+    fontFamily: 'Inter',
+  );
+  //coursedetails
+  static const TextStyle doctor2 = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: Color(0xFF848282),
+    fontFamily: 'Instrument Sans',
+    );
+    static const TextStyle percenatge = TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    color: Color(0xFF848282),
+    fontFamily: 'Instrument Sans',
+    );
+
+
 }

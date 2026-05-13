@@ -4,18 +4,17 @@ import '../../../Core/utilities/text_style.dart';
 import 'package:academia/Features/Schedule/model/class_model.dart';
 import '../widgets/calendar.dart';
 import '../widgets/class_card.dart';
- 
+
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({Key? key}) : super(key: key);
- 
+
   @override
   State<ScheduleScreen> createState() => _ScheduleScreenState();
 }
- 
+
 class _ScheduleScreenState extends State<ScheduleScreen> {
   DateTime _selectedDate = DateTime(2025, 9, 9);
-  
- 
+
   // Mock classes data
   final List<ClassModel> _classes = const [
     ClassModel(
@@ -46,7 +45,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       accentColor: AppColors.accentProgramming1,
     ),
   ];
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,27 +62,16 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 onDateSelected: (date) => setState(() => _selectedDate = date),
               ),
               const SizedBox(height: 24),
+
               // Classes section title
               Text('Classes', style: TextStyles.header2),
               const SizedBox(height: 16),
+
               // Class cards
               ..._classes.map((c) => ClassCardWidget(classModel: c)).toList(),
             ],
           ),
         ),
-      ),
-            bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF2D4B94),
-        backgroundColor: AppColors.screenBackground,
-        unselectedItemColor: Colors.grey,
-        currentIndex: 1,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
-          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
-        ],
       ),
     );
   }

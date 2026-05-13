@@ -1,15 +1,14 @@
 import 'package:academia/Features/Academic_results/screens/AcademicResultCourseScreen.dart';
 import 'package:academia/Core/widgets/bottom_bar.dart';
-import 'package:academia/Features/Academic_results(courses)/screens/AcademicResultCourseScreen.dart';
 import 'package:academia/Features/Academic_results/screens/Academic_results_screen.dart';
 import 'package:academia/Features/Assessments/screens/AssessmentScreen.dart';
 import 'package:academia/Features/Course%20details/screens/CourseScreendetails.dart';
 import 'package:academia/Features/Course/screens/CourseScreen.dart';
 import 'package:academia/Features/Fees/screens/FeesScreen.dart';
-import 'package:academia/Features/Home/controllers/home_controller.dart';
 import 'package:academia/Features/Payement%20status/screens/PayementStatusScreen.dart';
 import 'package:academia/Features/Payement/screens/PayementScreen.dart';
 import 'package:academia/Features/Registiration_admin/screens/NoRegistirationScreen.dart';
+import 'package:academia/Features/Services/screens/services_main_screen.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
 import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen2.dart';
 import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen.dart';
@@ -66,7 +65,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 👇 start from splash instead of home
-      initialRoute: '/planAdmin1',
+      initialRoute: '/app',
 
       // 👇 routes
       getPages: [
@@ -106,6 +105,7 @@ class MyApp extends StatelessWidget {
           name: '/profile',
           page: () => ProfilePage(),
         ),
+
          GetPage(
           name: '/schedule',
           page: () => ScheduleScreen(),
@@ -117,6 +117,10 @@ class MyApp extends StatelessWidget {
          GetPage(
           name: '/coursedetails',
           page: () => CourseScreenDetails(),
+        ),
+         GetPage(
+          name: '/Registration',
+          page: () => RegistrationScreen(),
         ),
         GetPage(
           name: '/Fees',
@@ -150,7 +154,7 @@ class MyApp extends StatelessWidget {
           name: '/planAdmin1',
           page: () => Planadminscreen1(), 
         ),
-        ),
+        
         GetPage(
   name: '/app',
   page: () => const BottomBar(),

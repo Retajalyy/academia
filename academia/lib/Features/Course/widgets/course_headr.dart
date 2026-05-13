@@ -10,22 +10,22 @@ class courseHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: AppColors.primaryBlue,
-
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min, // ✅ prevents overflow
-
+            mainAxisSize: MainAxisSize.min,
             children: [
               // Top Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Icon(Icons.arrow_back, color: Colors.white, size: 28),
-                  Icon(Icons.notifications, color: Colors.white, size: 28),
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                  ),
+                  const Icon(Icons.notifications, color: Colors.white, size: 28),
                 ],
               ),
 

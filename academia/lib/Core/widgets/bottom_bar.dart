@@ -18,8 +18,8 @@ class _MainLayoutState extends State<BottomBar> {
   final List<Widget> pages = [
     const HomePage(),
     const ScheduleScreen(),
-    const ServicesMainScreen(),
-    const ProfilePage(),
+    const ServicesScreen(),
+    ProfilePage(),
   ];
 
   void onTabChanged(int index) {

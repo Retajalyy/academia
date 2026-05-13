@@ -26,7 +26,7 @@ class LoginController extends GetxController {
         debugPrint("User chose to be remembered");
       }
 
-      Get.offAllNamed('/HomePage');
+      Get.offAllNamed('/app');
     } else {
       debugPrint("LOGIN FAILED: invalid credentials for user ID $id");
 

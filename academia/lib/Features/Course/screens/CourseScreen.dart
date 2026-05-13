@@ -80,20 +80,8 @@ class CourseScreen extends StatelessWidget {
         ),
       ),
 
-      /// 🔻 BOTTOM NAV (you said you already made it — keep or remove as you want)
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.babyblue,
-        selectedItemColor: const Color(0xFF2D4B94),
-        unselectedItemColor: Colors.grey,
-        currentIndex: 2,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
-          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
-        ],
-      ),
+   
+      
     );
   }
 }

@@ -29,7 +29,7 @@ class AppColors {
   static const Color alertError = Color(0xFFFF4C4C); // Errors, warnings, notifications
 
   // White (used for text or background)
-  static const Color lightblue = Color.fromARGB(255, 199, 208, 235);
+  static const Color lightblue = Color(0xFFDDEDFA);
 static const Color bottomNav = Color(0xFF000000);
 //schedule part
 static const Color darkgrey2 = Color(0xFF6B7280); // ✅ proper grey
@@ -47,7 +47,8 @@ static const Color accentProgramming1 = Color(0xFF0C4D83);
  //cardtexts
   static const textgrey = Color(0xFF908C8C);
    static const smalltext = Color(0xFF848282);
-    static const blueIcon = Color(0xFFDDEDFA);
+static const LightYellow = Color(0xFFFFF3DF);
+ 
 
 
 

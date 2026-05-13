@@ -1,25 +1,179 @@
+import 'package:academia/Core/utilities/colors.dart';
+import 'package:academia/Features/profile/widgets/degree_progress.dart';
 import 'package:flutter/material.dart';
-import 'package:academia/core/widgets/bottom_bar.dart';
+import 'package:get/get.dart';
+import '../controllers/profile_controller.dart';
+import '../models/student_model.dart';
+import '../widgets/profile_header.dart';
+import '../widgets/stat_card.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
+
+  final ProfileController controller = Get.put(ProfileController());
+  final RxInt selectedIndex = 3.obs;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("profile page")),
+      backgroundColor: const Color(0xFFF5F6FA),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.primaryBlue),
+          );
+        }
 
-      body: Center(
-        child: ElevatedButton(
-          child: const Text("Test Bottom Bar"),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const BottomBar(),
+        if (controller.error.value.isNotEmpty) {
+          return _ErrorView(
+            message: controller.error.value,
+            onRetry: controller.loadProfile,
+          );
+        }
+
+        if (controller.student.value == null) return const SizedBox();
+
+        return _ProfileBody(student: controller.student.value!);
+      }),
+
+    );
+  }
+}
+
+// ── Body ────────────────────────────────────────────────────────────────────
+
+class _ProfileBody extends StatelessWidget {
+  final StudentModel student;
+  const _ProfileBody({required this.student});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ProfileHeader(student: student),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ── Academic Statistics ──────────────────────────────────
+                const _SectionTitle(title: 'ACADEMIC STATISTICS'),
+                const SizedBox(height: 14),
+                GridView.count(
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 2.3,
+                  children: [
+                    StatCard(
+                      icon: Icons.bar_chart_rounded,
+                      iconColor:  AppColors.primaryBlue,
+                      value: student.gpa.toStringAsFixed(2),
+                      label: 'Current GPA',
+                    ),
+                    StatCard(
+                      icon: Icons.check_circle_outline_rounded,
+                      iconColor: Colors.green,
+                      value: '${student.attendancePercent}%',
+                      label: 'Attendance',
+                    ),
+                    StatCard(
+                      icon: Icons.description_outlined,
+                      iconColor: Colors.amber[700]!,
+                      value: '${student.coursesEnrolled}',
+                      label: 'Courses enrolled',
+                    ),
+                    StatCard(
+                      icon: Icons.school_outlined,
+                      iconColor: const Color(0xFF1A1A2E),
+                      value: 'Sem ${student.semesterCompleted}',
+                      label: 'Completed',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+
+                // ── Degree Progress ──────────────────────────────────────
+                const _SectionTitle(title: 'DEGREE PROGRESS'),
+                const SizedBox(height: 14),
+                DegreeProgressCard(
+                  completedCredits: student.completedCredits,
+                  totalCredits: student.totalCredits,
+                  remainingCredits: student.remainingCredits,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Shared sub-widgets ──────────────────────────────────────────────────────
+
+class _SectionTitle extends StatelessWidget {
+  final String title;
+  const _SectionTitle({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 4,
+          height: 18,
+          decoration: BoxDecoration(
+            color: const Color(0xFF1A1A2E),
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF1A1A2E),
+            letterSpacing: 0.6,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ErrorView extends StatelessWidget {
+  final String message;
+  final VoidCallback onRetry;
+  const _ErrorView({required this.message, required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline, size: 52, color: Colors.redAccent),
+            const SizedBox(height: 16),
+            Text(message, textAlign: TextAlign.center),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: onRetry,
+              icon: const Icon(Icons.refresh),
+              label: const Text('Retry'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF1A1A2E),
+                foregroundColor: Colors.white,
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:academia/Core/utilities/colors.dart';
 import 'package:get/get.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../controllers/login_controller.dart';
 import '../widgets/custom_text_field.dart';

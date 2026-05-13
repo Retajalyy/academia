@@ -28,7 +28,7 @@ class DueSoonCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(assignment.title, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2D4B94))),
-                    Text(assignment.course, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                    Text(assignment.courseName, style: const TextStyle(color: Colors.grey, fontSize: 12)),
                   ],
                 ),
               ),

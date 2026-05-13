@@ -47,6 +47,7 @@ static const Color accentProgramming1 = Color(0xFF0C4D83);
  //cardtexts
   static const textgrey = Color(0xFF908C8C);
    static const smalltext = Color(0xFF848282);
+    static const blueIcon = Color(0xFFDDEDFA);
 
 
 

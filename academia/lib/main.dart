@@ -16,6 +16,9 @@ import 'package:academia/Features/schedule/screens/schedule_screen.dart';
 import 'Features/Dashboard_admin/screens/Dashboard_screen.dart';
 import 'Features/AccountSettings_admin/screens/AccountSettingScreen.dart';
 import 'Features/plan_admin/screens/PlanAdminScreen.dart';
+import 'Features/plan_admin2/screens/PlanAdmin2Screen .dart';
+import 'Features/plan_admin3/screens/PlanAdmin3Screen .dart';
+
 import 'Features/Registiration_admin/screens/RegistirationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -64,7 +67,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 👇 start from splash instead of home
-      initialRoute: '/planAdmin1',
+      initialRoute: '/schedule',
 
       // 👇 routes
       getPages: [
@@ -148,6 +151,15 @@ class MyApp extends StatelessWidget {
           name: '/planAdmin1',
           page: () => Planadminscreen1(), 
         ),
+         GetPage(
+          name: '/planAdmin2',
+          page: () => Planadminscreen2(), 
+        ),
+         GetPage(
+          name: '/planAdmin3',
+          page: () => Planadminscreen3(), 
+        ),
+        
       ],
     );
   }

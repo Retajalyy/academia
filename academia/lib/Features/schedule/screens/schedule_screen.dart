@@ -4,7 +4,7 @@ import '../../../Core/utilities/text_style.dart';
 import 'package:academia/Features/Schedule/model/class_model.dart';
 import '../widgets/calendar.dart';
 import '../widgets/class_card.dart';
- 
+import 'package:academia/Core/widgets/bottom_bar.dart';
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({Key? key}) : super(key: key);
  
@@ -72,19 +72,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           ),
         ),
       ),
-            bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF2D4B94),
-        backgroundColor: AppColors.screenBackground,
-        unselectedItemColor: Colors.grey,
-        currentIndex: 1,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
-          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
-        ],
-      ),
+      
+    
     );
   }
 }

@@ -75,7 +75,7 @@ class _GroupFormWidgetState extends State<GroupFormWidget> {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.blueIcon,
+                        color: AppColors.primaryBlue,
                         borderRadius: BorderRadius.circular(9),
                       ),
                       child: const Icon(
@@ -101,7 +101,7 @@ class _GroupFormWidgetState extends State<GroupFormWidget> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: AppColors.blueIcon,
+                            color: AppColors.primaryBlue,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -118,7 +118,7 @@ class _GroupFormWidgetState extends State<GroupFormWidget> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: AppColors.blueIcon,
+                            color: AppColors.primaryBlue,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(

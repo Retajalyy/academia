@@ -1,8 +1,12 @@
+// lib/features/assessment/presentation/widgets/search_bar.dart
+
 import 'package:flutter/material.dart';
 import '../../../Core/utilities/colors.dart';
 
 class SearchBarWidget extends StatelessWidget {
-  const SearchBarWidget({super.key});
+  final ValueChanged<String>? onChanged;
+
+  const SearchBarWidget({super.key, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +16,11 @@ class SearchBarWidget extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: const TextField(
-        decoration: InputDecoration(
+      child: TextField(
+        onChanged: onChanged,
+        decoration: const InputDecoration(
           icon: Icon(Icons.search, color: AppColors.disabledText),
-          hintText: "Search courses...",
+          hintText: 'Search courses...',
           border: InputBorder.none,
         ),
       ),

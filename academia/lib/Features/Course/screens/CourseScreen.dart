@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controller/course_controller.dart';
+import '../services/course_services.dart';
+
 import '../widgets/course_headr.dart';
+import '../widgets/search_bar.dart';
+import '../widgets/course_card .dart';
+
 import '../../../Core/utilities/colors.dart';
-import 'package:academia/Features/Course/widgets/search_bar.dart';
-import 'package:academia/Features/Course/widgets/course_card .dart';// ✅ IMPORT YOUR CARD
 
 class CourseScreen extends StatelessWidget {
   const CourseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // ✅ Inject controller
+    final controller = Get.put(
+      CourseController(
+        service: CourseService.instance,
+      ),
+    );
+
     return Scaffold(
       backgroundColor: AppColors.primaryBlue,
       body: SafeArea(
@@ -21,67 +34,77 @@ class CourseScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 decoration: const BoxDecoration(
                   color: AppColors.babyblue,
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                /// ✅ Reactive UI
+                child: Obx(() {
+                  // 🔄 Loading
+                  if (controller.isLoading.value) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  // ❌ Error
+                  if (controller.errorMessage.value.isNotEmpty) {
+                    return Center(
+                      child: Text(
+                        controller.errorMessage.value,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    );
+                  }
+
+                  // 📚 Content
+                  return Column(
                     children: [
                       /// 🔍 SEARCH
-                      const SearchBarWidget(),
+                      SearchBarWidget(
+                        onChanged: controller.onSearchChanged,
+                      ),
 
                       const SizedBox(height: 18),
 
-                      /// 📚 COURSES
-                      const CourseCard(
-                        title: "Cloud Computing",
-                        doctor: "Dr. Youssef Senousy",
-                        type: "Core",
-                        credits: "3 credits",
-                        day: "Sunday",
-                        time: "11:00 - 12:00",
-                        location: "Room B3",
-                        color: AppColors.accentProgramming1,
-                      ),
+                      /// 📚 COURSE LIST
+                      Expanded(
+                        child: ListView.separated(
+                          itemCount:
+                              controller.filteredCourses.length,
 
-                      const SizedBox(height: 12),
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(height: 12),
 
-                      const CourseCard(
-                        title: "Digital Marketing",
-                        doctor: "Dr. Kholoud Farag",
-                        type: "Elective",
-                        credits: "2 credits",
-                        day: "Monday",
-                        time: "11:00 - 12:00",
-                        location: "Lab 1",
-                        color: AppColors.accentAI,
-                      ),
+                          itemBuilder: (context, index) {
+                            final course =
+                                controller.filteredCourses[index];
 
-                      const SizedBox(height: 12),
-
-                      const CourseCard(
-                        title: "Design Patterns",
-                        doctor: "Dr. Marwa Ahmed",
-                        type: "Core",
-                        credits: "3 credits",
-                        day: "Tuesday",
-                        time: "11:00 - 12:00",
-                        location: "Room B3",
-                        color: AppColors.accentProgramming1,
+                            return CourseCard(
+                              title: course.title,
+                              doctor: course.doctor,
+                              type: course.type,
+                              credits: course.credits,
+                              day: course.day,
+                              time: course.time,
+                              location: course.location,
+                              color: course.color,
+                            );
+                          },
+                        ),
                       ),
                     ],
-                  ),
-                ),
+                  );
+                }),
               ),
             ),
           ],
         ),
       ),
-
-   
-      
     );
   }
 }

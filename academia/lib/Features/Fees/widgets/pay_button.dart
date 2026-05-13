@@ -3,7 +3,9 @@ import '../../../Core/utilities/colors.dart';
 import 'package:academia/Features/Payement/screens/PayementScreen.dart';
 
 class PayButton extends StatelessWidget {
-  const PayButton({super.key});
+  final double outstanding;
+
+  const PayButton({super.key, required this.outstanding});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class PayButton extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const PayementScreen(),
+                      builder: (_) =>  PayementScreen(),
                     ),
                   );
                 },

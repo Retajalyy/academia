@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../../Core/utilities/colors.dart';
 import 'package:academia/Core/utilities/text_style.dart';
+import '../model/fees_model.dart';
 
 class PaidFeeCard extends StatelessWidget {
-  const PaidFeeCard({super.key});
+  final FeeModel fee;
+
+  const PaidFeeCard({super.key, required this.fee});
 
   @override
   Widget build(BuildContext context) {

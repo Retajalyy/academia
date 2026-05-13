@@ -2,7 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:academia/Core/utilities/colors.dart';
 
 class FeesHeader extends StatelessWidget {
-  const FeesHeader({super.key});
+  final double outstanding;
+  final double totalFees;
+  final double totalPaid;
+  final double progress;
+
+  const FeesHeader({
+    super.key,
+    required this.outstanding,
+    required this.totalFees,
+    required this.totalPaid,
+    required this.progress,
+  });
 
   @override
   Widget build(BuildContext context) {

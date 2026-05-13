@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:academia/Core/utilities/colors.dart';
 import 'package:academia/Features/Payement/screens/PayementScreen.dart';
+import '../model/fees_model.dart';
 
 
 class DueFeeCard extends StatelessWidget {
-  const DueFeeCard({super.key});
+  final FeeModel fee;
+
+  const DueFeeCard({super.key, required this.fee});
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +148,7 @@ class DueFeeCard extends StatelessWidget {
                             Navigator.pushReplacement(
                            context,
                            MaterialPageRoute(
-                           builder: (_) => const PayementScreen(),
+                           builder: (_) =>  PayementScreen(),
                              ),
                             );
                            },

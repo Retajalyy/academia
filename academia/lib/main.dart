@@ -1,11 +1,10 @@
-import 'package:academia/Features/Academic_results/screens/AcademicResultCourseScreen.dart';
+import 'package:academia/Features/Academic_course_results/screens/AcademicResultCourseScreen.dart';
 import 'package:academia/Core/widgets/bottom_bar.dart';
 import 'package:academia/Features/Academic_results/screens/Academic_results_screen.dart';
 import 'package:academia/Features/Assessments/screens/AssessmentScreen.dart';
 import 'package:academia/Features/Course%20details/screens/CourseScreendetails.dart';
 import 'package:academia/Features/Course/screens/CourseScreen.dart';
 import 'package:academia/Features/Fees/screens/FeesScreen.dart';
-import 'package:academia/Features/Payement%20status/screens/PayementStatusScreen.dart';
 import 'package:academia/Features/Payement/screens/PayementScreen.dart';
 import 'package:academia/Features/Registiration_admin/screens/NoRegistirationScreen.dart';
 import 'package:academia/Features/Services/screens/services_main_screen.dart';
@@ -68,7 +67,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 👇 start from splash instead of home
-      initialRoute: '/schedule',
+      initialRoute: '/app',
 
       // 👇 routes
       getPages: [
@@ -127,16 +126,13 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/Fees',
-          page: () => Feesscreen(),
+          page: () => FeesScreen(),
         ),
         GetPage(
           name: '/Payement',
           page: () => PayementScreen(),
         ),
-         GetPage(
-          name: '/Payementstatus',
-          page: () => PaymentSuccessScreen(),
-        ),
+        
         GetPage(
           name: '/Dashboard',
           page: () => DashboardScreen(),

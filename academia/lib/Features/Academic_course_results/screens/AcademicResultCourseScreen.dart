@@ -43,19 +43,6 @@ class AcademicResultsCourseScreen extends StatelessWidget {
           ],
         ),
       ),
-            bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF2D4B94),
-        backgroundColor: AppColors.babyblue,
-        unselectedItemColor: Colors.grey,
-        currentIndex: 2,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
-          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
-        ],
-      ),
     );
   }
 }

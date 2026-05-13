@@ -1,9 +1,11 @@
 import 'package:academia/Features/Home/screens/home_page.dart';
 import 'package:academia/Features/Schedule/screens/schedule_screen.dart';
 import 'package:academia/Features/Services/screens/services_main_screen.dart';
+import 'package:academia/Features/Schedule/controller/schedule_controller.dart';
 import 'package:academia/Features/profile/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -14,10 +16,12 @@ class BottomBar extends StatefulWidget {
 
 class _MainLayoutState extends State<BottomBar> {
   int currentIndex = 0;
+  final scheduleController = Get.put(ScheduleController());
+
 
   final List<Widget> pages = [
     const HomePage(),
-    const ScheduleScreen(),
+    ScheduleScreen(),
     const ServicesScreen(),
     ProfilePage(),
   ];

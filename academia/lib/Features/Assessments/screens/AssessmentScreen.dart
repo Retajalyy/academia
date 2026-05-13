@@ -1,4 +1,8 @@
+// lib/features/assessment/presentation/screens/assessment_screen.dart
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controller/assessment_controller.dart';
 import '../widgets/Assessment_headr.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/stats_card.dart';
@@ -10,6 +14,9 @@ class Assessmentscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Put the controller — or find it if already put upstream (e.g. in a binding-free initializer).
+    final controller = Get.put(AssessmentController());
+
     return Scaffold(
       backgroundColor: AppColors.primaryBlue,
       body: SafeArea(
@@ -22,113 +29,116 @@ class Assessmentscreen extends StatelessWidget {
             Expanded(
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: const BoxDecoration(
                   color: AppColors.babyblue,
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// 🔍 SEARCH
-                      const SearchBarWidget(),
+                child: Obx(() {
+                  // ── Loading state ──────────────────────────────────────────
+                  if (controller.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                      const SizedBox(height: 18),
-
-                      /// 📊 STATS
-                      Row(
-                        children: const [
-                          Expanded(
-                            child: StatCard(
-                              label: "Avg midterm",
-                              value: "74",
-                              showOutOfHundred: true,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: StatCard(
-                              label: "Avg participation",
-                              value: "88",
-                              showOutOfHundred: true,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: StatCard(
-                              label: "Avg attendance",
-                              value: "80%",
-                            ),
+                  // ── Error state ────────────────────────────────────────────
+                  if (controller.errorMessage.value.isNotEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(controller.errorMessage.value),
+                          const SizedBox(height: 12),
+                          ElevatedButton(
+                            onPressed: controller.loadData,
+                            child: const Text('Retry'),
                           ),
                         ],
                       ),
+                    );
+                  }
 
-                      const SizedBox(height: 18),
+                  // ── Success state ──────────────────────────────────────────
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// 🔍 SEARCH
+                        SearchBarWidget(
+                          onChanged: controller.onSearchChanged,
+                        ),
 
-                      /// 📚 COURSE CARDS
+                        const SizedBox(height: 18),
 
-                      CourseCard(
-                        title: "Cloud Computing",
-                        type: "Core",
-                        midterm: "10/15",
-                        midtermStatus: "Average",
-                        participation: "25/25",
-                        participationStatus: "Excellent",
-                        attendance: "92%",
-                        attendanceStatus: "Excellent",
-                        progress: 0.9,
-                        progressColor: AppColors.primaryBlue,
-                      ),
+                        /// 📊 STATS
+                        if (controller.stats.value != null)
+                          Row(
+                            children: [
+                              Expanded(
+                                child: StatCard(
+                                  label: 'Avg midterm',
+                                  value: controller.stats.value!.avgMidterm
+                                      .toStringAsFixed(0),
+                                  showOutOfHundred: true,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: StatCard(
+                                  label: 'Avg participation',
+                                  value: controller
+                                      .stats.value!.avgParticipation
+                                      .toStringAsFixed(0),
+                                  showOutOfHundred: true,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: StatCard(
+                                  label: 'Avg attendance',
+                                  value:
+                                      '${controller.stats.value!.avgAttendance.toStringAsFixed(0)}%',
+                                ),
+                              ),
+                            ],
+                          ),
 
-                      CourseCard(
-                        title: "Digital Marketing",
-                        type: "Elective",
-                        midterm: "8/15",
-                        midtermStatus: "Below avg",
-                        participation: "25/25",
-                        participationStatus: "Excellent",
-                        attendance: "92%",
-                        attendanceStatus: "Excellent",
-                        progress: 0.75,
-                        progressColor: AppColors.secondaryYellow,
-                      ),
+                        const SizedBox(height: 18),
 
-                      CourseCard(
-                        title: "Introduction to AI",
-                        type: "Core",
-                        midterm: "5/15",
-                        midtermStatus: "Fair",
-                        participation: "25/25",
-                        participationStatus: "Excellent",
-                        attendance: "88%",
-                        attendanceStatus: "Very Good",
-                        progress: 0.5,
-                        progressColor: AppColors.primaryBlue,
-                      ),
+                        /// 📚 COURSE CARDS
+                        if (controller.filteredAssessments.isEmpty)
+                          const Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 40),
+                              child: Text('No courses found.'),
+                            ),
+                          )
+                        else
+                          ...controller.filteredAssessments.map(
+                            (a) => CourseCard(
+                              title: a.courseTitle,
+                              type: a.courseType,
+                              midterm: a.midterm,
+                              midtermStatus: a.midtermStatus,
+                              participation: a.participation,
+                              participationStatus: a.participationStatus,
+                              attendance: a.attendance,
+                              attendanceStatus: a.attendanceStatus,
+                              progress: a.progress,
+                              progressColor: a.courseType.toLowerCase() == 'core'
+                                  ? AppColors.primaryBlue
+                                  : AppColors.secondaryYellow,
+                            ),
+                          ),
 
-                      const SizedBox(height: 20),
-                    ],
-                  ),
-                ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  );
+                }),
               ),
             ),
           ],
         ),
-      ),
-
-      /// 🔻 BOTTOM NAV
-            bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.babyblue,
-        selectedItemColor: const Color(0xFF2D4B94),
-        unselectedItemColor: Colors.grey,
-        currentIndex: 2,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Schedule"),
-          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Services"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
-        ],
       ),
     );
   }

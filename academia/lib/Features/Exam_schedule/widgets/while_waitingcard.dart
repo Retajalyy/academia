@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:academia/Features/Course details/screens/CourseScreendetails.dart';
+import 'package:academia/Features/Course/screens/CourseScreendetails.dart';
 import '../../../Core/utilities/colors.dart';
 import '../../../Core/utilities/text_style.dart';
 import 'package:academia/Features/Academic_results/screens/Academic_results_screen.dart';

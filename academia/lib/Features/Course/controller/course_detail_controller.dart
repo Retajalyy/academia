@@ -2,8 +2,7 @@
 
 import 'package:get/get.dart';
 import '../model/course_detail_model.dart';
-import '../service/course_detail_service.dart';
-
+import 'package:academia/Features/Course/services/course_detail_service.dart';
 class CourseDetailsController extends GetxController {
   final CourseDetailsService _service = CourseDetailsService();
 

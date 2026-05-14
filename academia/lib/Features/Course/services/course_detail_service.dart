@@ -1,7 +1,6 @@
 // lib/Features/Course/services/course_details_service.dart
 
-import '../model/course_detail_model.dart';
-
+import 'package:academia/Features/Course/model/course_detail_model.dart';
 class CourseDetailsService {
   Future<CourseDetailsModel> fetchCourseDetails(String courseId) async {
     await Future.delayed(const Duration(milliseconds: 800));

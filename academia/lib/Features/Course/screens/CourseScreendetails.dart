@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../widgets/course_headr.dart';
-import '../widgets/course_stat.dart';
-import '../widgets/material_list.dart';
-import '../controllers/course_detail_controller.dart';
+import 'package:academia/Features/Course/widgets/course_headr2.dart';
+import 'package:academia/Features/Course/widgets/course_stat.dart';
+import 'package:academia/Features/Course/widgets/material_list.dart';
+import 'package:academia/Features/Course/controller/course_detail_controller.dart';
 import '../../../Core/utilities/colors.dart';
 
 class CourseScreenDetails extends StatelessWidget {

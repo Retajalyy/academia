@@ -20,20 +20,27 @@ class SubjectRow extends StatelessWidget {
     this.isLast = false,
   });
 
-  /// 🎯 GPA color rule:
-  /// - If grade letter is C → yellow
-  /// - Otherwise → blue
+  /// GPA color logic
   Color getGpaColor(String letter) {
-    if (letter == "C") {
-      return const Color(0xFFB18334); // yellow/orange
+    if (letter.contains("C")) {
+      return const Color(0xFFB18334);
     }
-    return const Color(0xFF0C4D83); // blue
+
+    if (letter.contains("D") || letter.contains("F")) {
+      return Colors.red;
+    }
+
+    return const Color(0xFF0C4D83);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 14,
+      ),
+
       decoration: BoxDecoration(
         border: isLast
             ? null
@@ -43,15 +50,19 @@ class SubjectRow extends StatelessWidget {
                 ),
               ),
       ),
+
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          /// Subject
+          /// SUBJECT NAME
           Expanded(
             flex: 4,
             child: Text(
               subject,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF0C4D83),
@@ -59,28 +70,32 @@ class SubjectRow extends StatelessWidget {
             ),
           ),
 
-          /// Grade
+          const SizedBox(width: 8),
+
+          /// GRADE
           Expanded(
             flex: 2,
             child: RichText(
+              overflow: TextOverflow.ellipsis,
               text: TextSpan(
                 children: [
                   TextSpan(
                     text: grade,
                     style: const TextStyle(
                       color: Color(0xFF0C4D83),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      fontFamily: "Inter",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontFamily: 'Inter',
                     ),
                   ),
+
                   const TextSpan(
                     text: '/100',
                     style: TextStyle(
                       color: Colors.grey,
-                      fontSize: 15,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      fontFamily: "Inter",
+                      fontFamily: 'Inter',
                     ),
                   ),
                 ],
@@ -88,35 +103,42 @@ class SubjectRow extends StatelessWidget {
             ),
           ),
 
-          /// GPA with rule-based color
+          const SizedBox(width: 8),
+
+          /// GPA
           Expanded(
             child: Text(
               gpa,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontFamily: 'Inter',
-                fontWeight: FontWeight.w600,
-                color: getGpaColor(letter), 
+                fontWeight: FontWeight.w700,
+                color: getGpaColor(letter),
               ),
             ),
           ),
 
-          /// Letter badge
+          const SizedBox(width: 8),
+
+          /// LETTER BADGE
           Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: 8,
+              horizontal: 10,
               vertical: 6,
             ),
+
             decoration: BoxDecoration(
               color: badgeColor,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(6),
             ),
+
             child: Text(
               letter,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontFamily: 'Inter',
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
                 color: letterColor,
               ),
             ),
@@ -125,5 +147,4 @@ class SubjectRow extends StatelessWidget {
       ),
     );
   }
-
 }

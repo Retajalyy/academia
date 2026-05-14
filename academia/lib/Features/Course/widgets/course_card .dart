@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:academia/Core/utilities/colors.dart';
 import 'package:academia/Core/utilities/text_style.dart';
-import 'package:academia/Features/Course%20details/screens/CourseScreendetails.dart';
+import 'package:academia/Features/Course/screens/CourseScreendetails.dart';
 
 class CourseCard extends StatelessWidget {
   final String title;

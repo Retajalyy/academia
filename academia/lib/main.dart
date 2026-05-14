@@ -1,8 +1,8 @@
-import 'package:academia/Features/Academic_course_results/screens/AcademicResultCourseScreen.dart';
+import 'package:academia/Features/Academic_results/screens/AcademicResultCourseScreen.dart';
 import 'package:academia/Core/widgets/bottom_bar.dart';
 import 'package:academia/Features/Academic_results/screens/Academic_results_screen.dart';
 import 'package:academia/Features/Assessments/screens/AssessmentScreen.dart';
-import 'package:academia/Features/Course%20details/screens/CourseScreendetails.dart';
+import 'package:academia/Features/Course/screens/CourseScreendetails.dart';
 import 'package:academia/Features/Course/screens/CourseScreen.dart';
 import 'package:academia/Features/Fees/screens/FeesScreen.dart';
 import 'package:academia/Features/Payement/screens/PayementScreen.dart';
@@ -10,8 +10,8 @@ import 'package:academia/Features/Registiration_admin/screens/NoRegistirationScr
 import 'package:academia/Features/Registration/screens/registration_screen.dart' hide RegistrationScreen;
 import 'package:academia/Features/Services/screens/services_main_screen.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
-import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen2.dart';
-import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen.dart';
+import 'package:academia/Features/Exam_schedule/screens/exam_Schedule_screen2.dart';
+import 'package:academia/Features/Exam_schedule/screens/exam_Schedule_screen.dart';
 import 'package:academia/Features/profile/screens/profile_page.dart';
 import 'package:academia/Features/schedule/screens/schedule_screen.dart';
 import 'Features/Dashboard_admin/screens/Dashboard_screen.dart';

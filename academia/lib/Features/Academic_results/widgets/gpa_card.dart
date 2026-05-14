@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../Core/utilities/colors.dart';
+import '../controller/academic_results_controller.dart';
+import 'package:get/get.dart';
 
 class GpaCard extends StatelessWidget {
   const GpaCard({super.key});
@@ -15,24 +17,20 @@ class GpaCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            num,
-            style: const TextStyle(
-              color: Colors.white,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-            ),
-          ),
-          Text(
-            sem,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
-            ),
-          )
+          Text(num,
+              style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
+              )),
+          Text(sem,
+              style: const TextStyle(
+                color: Colors.white70,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
+                fontSize: 12,
+              )),
         ],
       ),
     );
@@ -52,9 +50,7 @@ class GpaCard extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: FractionallySizedBox(
             widthFactor: value,
-            child: Container(
-              color: AppColors.secondaryYellow,
-            ),
+            child: Container(color: AppColors.secondaryYellow),
           ),
         ),
       ),
@@ -63,143 +59,126 @@ class GpaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: AppColors.primaryBlue,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+    final ctrl = Get.find<AcademicResultsController>();
 
-              /// HEADER ROW (fixed overflow-safe)
-              Row(
-                children: [
-                  const Expanded(
-                    child: Text(
-                      "Cumulative GPA",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+    return Obx(() {
+      final boxes = ctrl.gpaBoxSemesters;
 
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 3,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white24,
-                      borderRadius: BorderRadius.circular(11),
-                    ),
-                    child: const Text(
-                      "Semesters 1-7",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 6),
-
-              /// GPA TEXT (no UI change, only safe)
-              RichText(
-                text: const TextSpan(
+      return Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.primaryBlue,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    TextSpan(
-                      text: "3.61",
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 40,
-                        color: Colors.white,
+                    const Expanded(
+                      child: Text(
+                        "Cumulative GPA",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
-                    TextSpan(
-                      text: "/4.0",
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 22,
-                        color: Color(0xFFD3D4D4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Colors.white24,
+                        borderRadius: BorderRadius.circular(11),
+                      ),
+                      child: Text(
+                        "Semesters 1-${ctrl.semesters.where((s) => s.gpa != null).length}",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
 
-              const SizedBox(height: 6),
+                const SizedBox(height: 6),
 
-              progressBar(0.7),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: ctrl.summary.value?.cumulativeGpaDisplay ?? "-",
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const TextSpan(
+                        text: "/4.0",
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 22,
+                          color: Color(0xFFD3D4D4),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
-              const SizedBox(height: 9),
+                const SizedBox(height: 6),
 
-              /// SEMESTERS GRID (keeps same design)
-              Wrap(
-                spacing: 21,
-                runSpacing: 10,
-                children: [
-                  semesterBox("3.9", "Sem 1"),
-                  semesterBox("3.6", "Sem 2"),
-                  semesterBox("3.3", "Sem 3"),
-                  semesterBox("3.7", "Sem 4"),
-                  semesterBox("3.8", "Sem 5"),
-                  semesterBox("4.0", "Sem 6"),
-                  semesterBox("3.8", "Sem 7"),
-                  semesterBox("-", "Sem 8"),
-                ],
-              ),
+                progressBar(ctrl.gpaProgress),
 
-              const SizedBox(height: 8),
-            ],
+                const SizedBox(height: 9),
+
+                Wrap(
+                  spacing: 21,
+                  runSpacing: 10,
+                  children: boxes
+                      .map((s) => semesterBox(s.gpaDisplay, s.semesterLabel.replaceFirst("Semester ", "Sem ")))
+                      .toList(),
+                ),
+
+                const SizedBox(height: 8),
+              ],
+            ),
           ),
-        ),
 
-        const SizedBox(height: 6),
+          const SizedBox(height: 6),
 
-        /// FOOTER (unchanged UI)
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Divider(
-                  thickness: 0.8,
-                  color: Color(0xFFD3D4D4),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0),
+            child: Row(
+              children: [
+                const Expanded(
+                    child: Divider(thickness: 0.8, color: Color(0xFFD3D4D4))),
+                const SizedBox(width: 8),
+                Text(
+                  ctrl.currentYearLabel,
+                  style: const TextStyle(
+                    color: Color(0xFF979696),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              SizedBox(width: 8),
-              Text(
-                "Year 4 • 2025-2026 (current)",
-                style: TextStyle(
-                  color: Color(0xFF979696),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(width: 8),
-              Expanded(
-                child: Divider(
-                  thickness: 1,
-                  color: Color(0xFFD3D4D4),
-                ),
-              ),
-            ],
+                const SizedBox(width: 8),
+                const Expanded(
+                    child: Divider(thickness: 1, color: Color(0xFFD3D4D4))),
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }

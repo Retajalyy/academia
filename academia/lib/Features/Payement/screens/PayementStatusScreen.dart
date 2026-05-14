@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:academia/Core/utilities/colors.dart';
 import 'package:academia/Features/Payement/model/payement_status_model.dart';
-import 'package:academia/Features/Payement_status/widgets/PayementStatusHeader.dart';
+import 'package:academia/Features/Payement/widgets/PayementStatusHeader.dart';
 
 class PaymentSuccessScreen extends StatelessWidget {
   final PaymentStatusModel status;

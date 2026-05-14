@@ -3,17 +3,28 @@ import 'package:academia/Features/Schedule/screens/schedule_screen.dart';
 import 'package:academia/Features/Services/screens/services_main_screen.dart';
 import 'package:academia/Features/profile/screens/profile_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+  final int initialIndex;
+
+  const BottomBar({
+    super.key,
+    this.initialIndex = 0,
+  });
 
   @override
-  State<BottomBar> createState() => _MainLayoutState();
+  State<BottomBar> createState() => _BottomBarState();
 }
 
-class _MainLayoutState extends State<BottomBar> {
-  int currentIndex = 0;
+class _BottomBarState extends State<BottomBar> {
+  late int currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.initialIndex;
+  }
 
   final List<Widget> pages = [
     const HomePage(),
@@ -28,7 +39,10 @@ class _MainLayoutState extends State<BottomBar> {
     });
   }
 
-  Widget buildSvgIcon(String path, {bool isActive = false}) {
+  Widget buildSvgIcon(
+    String path, {
+    bool isActive = false,
+  }) {
     return SvgPicture.asset(
       path,
       width: 31,
@@ -52,31 +66,57 @@ class _MainLayoutState extends State<BottomBar> {
         currentIndex: currentIndex,
         onTap: onTabChanged,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blue,
+
+        selectedItemColor: const Color(0xFF2468A0),
         unselectedItemColor: Colors.grey,
+
         selectedFontSize: 12,
         unselectedFontSize: 12,
+
         showUnselectedLabels: true,
 
         items: [
           BottomNavigationBarItem(
-            icon: buildSvgIcon("lib/assets/Icons/home.svg"),
-            activeIcon: buildSvgIcon("lib/assets/Icons/home.svg", isActive: true),
+            icon: buildSvgIcon(
+              "lib/assets/Icons/home.svg",
+            ),
+            activeIcon: buildSvgIcon(
+              "lib/assets/Icons/home.svg",
+              isActive: true,
+            ),
             label: "Home",
           ),
+
           BottomNavigationBarItem(
-            icon: buildSvgIcon("lib/assets/Icons/schedule.svg"),
-            activeIcon: buildSvgIcon("lib/assets/Icons/schedule.svg", isActive: true),
+            icon: buildSvgIcon(
+              "lib/assets/Icons/schedule.svg",
+            ),
+            activeIcon: buildSvgIcon(
+              "lib/assets/Icons/schedule.svg",
+              isActive: true,
+            ),
             label: "Schedule",
           ),
+
           BottomNavigationBarItem(
-            icon: buildSvgIcon("lib/assets/Icons/services.svg"),
-            activeIcon: buildSvgIcon("lib/assets/Icons/services.svg", isActive: true),
+            icon: buildSvgIcon(
+              "lib/assets/Icons/services.svg",
+            ),
+            activeIcon: buildSvgIcon(
+              "lib/assets/Icons/services.svg",
+              isActive: true,
+            ),
             label: "Services",
           ),
+
           BottomNavigationBarItem(
-            icon: buildSvgIcon("lib/assets/Icons/profile.svg"),
-            activeIcon: buildSvgIcon("lib/assets/Icons/profile.svg", isActive: true),
+            icon: buildSvgIcon(
+              "lib/assets/Icons/profile.svg",
+            ),
+            activeIcon: buildSvgIcon(
+              "lib/assets/Icons/profile.svg",
+              isActive: true,
+            ),
             label: "Profile",
           ),
         ],

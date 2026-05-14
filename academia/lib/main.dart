@@ -8,6 +8,7 @@ import 'package:academia/Features/Fees/screens/FeesScreen.dart';
 import 'package:academia/Features/Payement%20status/screens/PayementStatusScreen.dart';
 import 'package:academia/Features/Payement/screens/PayementScreen.dart';
 import 'package:academia/Features/Registiration_admin/screens/NoRegistirationScreen.dart';
+import 'package:academia/Features/Registration/screens/registration_screen.dart';
 import 'package:academia/Features/Services/screens/services_main_screen.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
 import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen2.dart';
@@ -17,7 +18,7 @@ import 'package:academia/Features/schedule/screens/schedule_screen.dart';
 import 'Features/Dashboard_admin/screens/Dashboard_screen.dart';
 import 'Features/AccountSettings_admin/screens/AccountSettingScreen.dart';
 import 'Features/plan_admin/screens/PlanAdminScreen.dart';
-import 'Features/Registiration_admin/screens/RegistirationScreen.dart';
+import 'Features/Registiration_admin/screens/RegistirationScreen.dart' hide RegistrationScreen;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

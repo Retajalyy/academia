@@ -15,7 +15,6 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   DateTime _selectedDate = DateTime(2025, 9, 9);
 
-  // Mock classes data
   final List<ClassModel> _classes = const [
     ClassModel(
       title: 'Programming 1',
@@ -48,29 +47,35 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.screenBackground,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Calendar
-              CalendarWidget(
-                selectedDate: _selectedDate,
-                onDateSelected: (date) => setState(() => _selectedDate = date),
-              ),
-              const SizedBox(height: 24),
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Calendar
+            CalendarWidget(
+              selectedDate: _selectedDate,
+              onDateSelected: (date) {
+                setState(() {
+                  _selectedDate = date;
+                });
+              },
+            ),
 
-              // Classes section title
-              Text('Classes', style: TextStyles.header2),
-              const SizedBox(height: 16),
+            const SizedBox(height: 24),
 
-              // Class cards
-              ..._classes.map((c) => ClassCardWidget(classModel: c)).toList(),
-            ],
-          ),
+            // Title
+            Text(
+              'Classes',
+              style: TextStyles.header2,
+            ),
+
+            const SizedBox(height: 16),
+
+            // Class list
+            ..._classes.map((c) => ClassCardWidget(classModel: c)),
+          ],
         ),
       ),
     );

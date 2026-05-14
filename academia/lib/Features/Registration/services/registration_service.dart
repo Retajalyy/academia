@@ -1,121 +1,118 @@
-// ──────────────────────────────────────────────────────
-// registration/services/registration_service.dart
-// ──────────────────────────────────────────────────────
-
-
 import 'package:academia/Features/Registration/models/registration_model.dart';
 
-abstract class IRegistrationService {
-  Future<RegistrationData> fetchRegistrationData();
-  Future<void> confirmRegistration({
-    required String semesterId,
-    required String groupId,
-    required List<String> selectedCourseIds,
-  });
-}
+import '../models/registration_model.dart';
 
-class RegistrationService implements IRegistrationService {
-  final String baseUrl;
-
-  RegistrationService({this.baseUrl = 'https://api.university.edu/v1'});
-
-  @override
-  Future<RegistrationData> fetchRegistrationData() async {
-    // ── Real implementation ──────────────────────────
-    // final response = await _client.get('$baseUrl/registration');
-    // return _parseRegistrationData(jsonDecode(response.body));
-
-    await Future.delayed(const Duration(milliseconds: 800));
-    return _mockData();
+/// Mock service — replace method bodies with real API calls.
+class RegistrationService {
+  // ── Fetch current registration state from the server ───────────────────────
+  Future<RegistrationState> fetchRegistrationState() async {
+    // TODO: call GET /api/registration/status
+    await Future.delayed(const Duration(milliseconds: 600));
+    return RegistrationState.notOpenedYet; // mock
   }
 
-  @override
-  Future<void> confirmRegistration({
-    required String semesterId,
+  // ── Fetch available groups for a given semester tab ─────────────────────────
+  Future<List<CourseGroup>> fetchGroups(String semesterTab) async {
+    // TODO: call GET /api/registration/groups?semester={semesterTab}
+    await Future.delayed(const Duration(milliseconds: 400));
+    return _mockGroups;
+  }
+
+  // ── Fetch semester info (shown when closed) ──────────────────────────────────
+  Future<SemesterInfo> fetchSemesterInfo() async {
+    // TODO: call GET /api/registration/semester-info
+    await Future.delayed(const Duration(milliseconds: 400));
+    return const SemesterInfo(
+      semester: 'Semester B',
+      year: 'Spring 2026',
+      registrationOpen: 'April 10, 2026',
+      registrationClosed: 'April 25, 2026',
+      semesterStart: 'May 10, 2026',
+    );
+  }
+
+  // ── Fetch student balance ────────────────────────────────────────────────────
+  Future<BalanceInfo> fetchBalanceInfo() async {
+    // TODO: call GET /api/student/balance
+    await Future.delayed(const Duration(milliseconds: 400));
+    return const BalanceInfo(
+      outstandingAmount: 17000,
+      currency: 'EGP',
+      isPaid: false,
+      dueDate: 'June 1, 2026',
+    );
+  }
+
+  // ── Confirm / submit registration ────────────────────────────────────────────
+  Future<bool> submitRegistration({
     required String groupId,
-    required List<String> selectedCourseIds,
+    required List<String> courseIds,
   }) async {
-    // ── Real implementation ──────────────────────────
-    // await _client.post(
-    //   '$baseUrl/registration/confirm',
-    //   body: jsonEncode({
-    //     'semester_id': semesterId,
-    //     'group_id': groupId,
-    //     'course_ids': selectedCourseIds,
-    //   }),
-    // );
-
+    // TODO: call POST /api/registration/confirm
     await Future.delayed(const Duration(seconds: 1));
+    return true; // mock success
   }
 
-  // ── Mock data ─────────────────────────────────────
-  RegistrationData _mockData() => RegistrationData(
-        semester: Semester(
-          id: 'S5_SP26',
-          label: 'Semester 5, Spring 2026',
-          registrationOpen: DateTime(2026, 4, 20),
-          registrationClosed: DateTime(2026, 4, 25),
-          semesterStarts: DateTime(2026, 5, 10),
-          status: RegistrationStatus.open, // change to test other states
+  // ── Initiate fee payment ──────────────────────────────────────────────────────
+  Future<String> initiatePayment({required double amount}) async {
+    // TODO: call POST /api/payment/initiate
+    await Future.delayed(const Duration(milliseconds: 800));
+    return 'https://payment.example.com/checkout/mock'; // mock payment URL
+  }
+
+  // ─────────────────────────── Mock Data ──────────────────────────────────────
+  static final List<CourseGroup> _mockGroups = [
+    CourseGroup(
+      id: 'se1',
+      label: 'Group SE1',
+      creditHours: 18,
+      lectures: [
+        const CourseLecture(
+          courseCode: 'CS401',
+          courseName: 'Cloud Computing',
+          creditHours: 3,
+          day: 'Sun',
+          timeFrom: '08:00',
+          timeTo: '09:30',
+          instructor: 'Dr. Youssef Senousy',
+          room: 'Room B3',
+          sectionDay: 'Tue',
+          sectionInstructor: 'Mr. Ahmed Mohamed',
+          sectionTime: '11:00 - 12:30',
+          sectionRoom: 'Lab 01',
         ),
-        groups: [
-          Group(
-            id: 'SE1',
-            label: 'SE1',
-            totalCourses: 5,
-            totalCredits: 12,
-            courses: [
-              Course(
-                id: 'CC101',
-                name: 'Cloud Computing',
-                creditHours: 3,
-                sessions: [
-                  const CourseSession(
-                    day: 'Sat',
-                    timeFrom: '09:00',
-                    timeTo: '11:00',
-                    location: 'Room B2',
-                    instructor: 'Dr. Youssef Gomaa',
-                    type: SessionType.lecture,
-                  ),
-                  const CourseSession(
-                    day: 'Tue',
-                    timeFrom: '11:00',
-                    timeTo: '12:30',
-                    location: 'Lab 31',
-                    instructor: 'Mr. Ahmed Mohamed',
-                    type: SessionType.section,
-                  ),
-                ],
-              ),
-              Course(
-                id: 'AA201',
-                name: 'Analysis of Algorithms',
-                creditHours: 3,
-                sessions: [
-                  const CourseSession(
-                    day: 'Sun',
-                    timeFrom: '08:30',
-                    timeTo: '10:00',
-                    location: 'Room A1',
-                    instructor: 'Dr. Youssef Dammous',
-                    type: SessionType.lecture,
-                  ),
-                ],
-                prerequisiteNote:
-                    'Prerequisite not met: requires Discrete Mathematics to unlock this course.',
-              ),
-            ],
-          ),
-          Group(
-            id: 'SE2',
-            label: 'SE2',
-            totalCourses: 5,
-            totalCredits: 12,
-            courses: [],
-          ),
-        ],
-        // outstandingBalance: 17000,  // ← uncomment to test unpaid state
-        // balanceDueDate: 'Apr 30',
-      );
+        const CourseLecture(
+          courseCode: 'CS412',
+          courseName: 'Analysis of Algorithms',
+          creditHours: 3,
+          day: 'Sun',
+          timeFrom: '06:00',
+          timeTo: '09:30',
+          instructor: 'Dr. Youssef Senousy',
+          room: 'Room B3',
+          sectionDay: 'Tue',
+          sectionInstructor: 'Mr. Ahmed Mohamed',
+          sectionTime: '11:00 - 12:30',
+          sectionRoom: 'Lab 01',
+        ),
+        const CourseLecture(
+          courseCode: 'CS430',
+          courseName: 'Analysis of Algorithms',
+          creditHours: 3,
+          day: 'Sun',
+          timeFrom: '06:00',
+          timeTo: '09:30',
+          instructor: 'Dr. Youssef Senousy',
+          room: 'Room B3',
+          sectionDay: 'Tue',
+        ),
+      ],
+    ),
+    CourseGroup(
+      id: 'se2',
+      label: 'Group SE2',
+      creditHours: 18,
+      lectures: const [],
+    ),
+  ];
 }

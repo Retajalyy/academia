@@ -1,148 +1,173 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import '../services/registration_service.dart';
 import '../models/registration_model.dart';
-import '../bindings/registration_binding.dart';
-
-enum RegistrationViewState { loading, error, closed, notOpened, unpaid, open }
+import '../services/registration_service.dart';
 
 class RegistrationController extends GetxController {
-  final IRegistrationService _service;
+  final RegistrationService _service;
 
-  RegistrationController(this._service);
+  RegistrationController({RegistrationService? service})
+      : _service = service ?? RegistrationService();
 
-  // ── Observables ────────────────────────────────────
-  final viewState = RegistrationViewState.loading.obs;
-  final registrationData = Rxn<RegistrationData>();
-  final errorMessage = RxnString();
-  final selectedGroupId = ''.obs;
-  final isConfirming = false.obs;
-  final confirmSuccess = false.obs;
+  // ── UI State ────────────────────────────────────────────────────────────────
+  final Rx<RegistrationState> registrationState =
+      RegistrationState.open.obs;
 
-  // ── Derived getters ────────────────────────────────
-  Group? get selectedGroup {
-    final data = registrationData.value;
-    if (data == null) return null;
-    try {
-      return data.groups.firstWhere((g) => g.id == selectedGroupId.value);
-    } catch (_) {
-      return data.groups.isNotEmpty ? data.groups.first : null;
-    }
-  }
+  final RxBool isLoading = false.obs;
+  final RxBool isSubmitting = false.obs;
+  final RxString errorMessage = ''.obs;
 
-  List<Course> get selectedCourses =>
-      selectedGroup?.courses.where((c) => c.isSelected.value).toList() ?? [];
+  // ── Tab / Group Selection ───────────────────────────────────────────────────
+  final RxInt selectedTabIndex = 0.obs; // 0 = Semester A, 1 = Semester B
+  final RxString selectedGroupId = ''.obs;
+  final RxList<CourseGroup> availableGroups = <CourseGroup>[].obs;
 
-  bool get canConfirm =>
-      selectedCourses.isNotEmpty &&
-      !selectedCourses.any((c) => c.prerequisiteNote != null);
+  // ── Schedule / Courses ──────────────────────────────────────────────────────
+  final RxList<CourseWithWarning> scheduledCourses = <CourseWithWarning>[].obs;
+  final RxList<String> selectedCourseIds = <String>[].obs;
 
-  // ── Lifecycle ──────────────────────────────────────
+  // ── Closed state data ───────────────────────────────────────────────────────
+  final Rx<SemesterInfo?> semesterInfo = Rx<SemesterInfo?>(null);
+
+  // ── Not-opened-yet state data ───────────────────────────────────────────────
+  final Rx<BalanceInfo?> balanceInfo = Rx<BalanceInfo?>(null);
+
+  // ─────────────────────────────────────────────────────────────────────────────
+
   @override
   void onInit() {
     super.onInit();
-    fetchData();
+    _initialize();
   }
 
-  // ── Fetch ──────────────────────────────────────────
-  Future<void> fetchData() async {
-    viewState.value = RegistrationViewState.loading;
-    errorMessage.value = null;
-
+  Future<void> _initialize() async {
+    isLoading.value = true;
     try {
-      final data = await _service.fetchRegistrationData();
-      registrationData.value = data;
+      final state = await _service.fetchRegistrationState();
+      registrationState.value = state;
 
-      if (data.groups.isNotEmpty) {
-        selectedGroupId.value = data.groups.first.id;
+      switch (state) {
+        case RegistrationState.open:
+          await _loadGroups();
+          break;
+        case RegistrationState.closed:
+          await _loadSemesterInfo();
+          break;
+        case RegistrationState.notOpenedYet:
+          await _loadBalanceInfo();
+          break;
       }
-
-      _resolveViewState(data);
     } catch (e) {
-      errorMessage.value = e.toString();
-      viewState.value = RegistrationViewState.error;
-    }
-  }
-
-  // ── Group selection ────────────────────────────────
-  void selectGroup(String groupId) {
-    if (selectedGroupId.value == groupId) return;
-    selectedGroupId.value = groupId;
-  }
-
-  // ── Course toggle ──────────────────────────────────
-  void toggleCourse(String courseId) {
-    final course = selectedGroup?.courses.cast<Course?>().firstWhere(
-      (c) => c?.id == courseId,
-      orElse: () => null,
-    );
-    if (course == null) return;
-    course.isSelected.toggle();
-  }
-
-  // ── Confirm registration ───────────────────────────
-  Future<void> confirmRegistration() async {
-    final data = registrationData.value;
-    if (data == null || !canConfirm) return;
-
-    isConfirming.value = true;
-    confirmSuccess.value = false;
-
-    try {
-      await _service.confirmRegistration(
-        semesterId: data.semester.id,
-        groupId: selectedGroupId.value,
-        selectedCourseIds: selectedCourses.map((c) => c.id).toList(),
-      );
-      confirmSuccess.value = true;
-
-      Get.snackbar(
-        'Success',
-        'Registration confirmed successfully!',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: const Color(0xFF22C55E),
-        colorText: Colors.white,
-        borderRadius: 12,
-        margin: const EdgeInsets.all(16),
-      );
-    } catch (e) {
-      errorMessage.value = 'Failed to confirm registration: $e';
-
-      Get.snackbar(
-        'Error',
-        errorMessage.value ?? 'Something went wrong.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: const Color(0xFFEF4444),
-        colorText: Colors.white,
-        borderRadius: 12,
-        margin: const EdgeInsets.all(16),
-      );
+      errorMessage.value = 'Failed to load registration data. Please try again.';
     } finally {
-      isConfirming.value = false;
+      isLoading.value = false;
     }
   }
 
-  // ── Helpers ────────────────────────────────────────
-  void _resolveViewState(RegistrationData data) {
-    if (data.hasPendingBalance) {
-      viewState.value = RegistrationViewState.unpaid;
+  // ── Group / Tab helpers ──────────────────────────────────────────────────────
+
+  Future<void> _loadGroups() async {
+    final tab = selectedTabIndex.value == 0 ? 'A' : 'B';
+    final groups = await _service.fetchGroups(tab);
+    availableGroups.assignAll(groups);
+
+    if (groups.isNotEmpty) {
+      selectedGroupId.value = groups.first.id;
+      _populateSchedule(groups.first);
+    }
+  }
+
+  void onTabChanged(int index) {
+    if (selectedTabIndex.value == index) return;
+    selectedTabIndex.value = index;
+    _loadGroups();
+  }
+
+  void onGroupSelected(CourseGroup group) {
+    selectedGroupId.value = group.id;
+    _populateSchedule(group);
+  }
+
+  void _populateSchedule(CourseGroup group) {
+    scheduledCourses.assignAll(
+      group.lectures.map((l) => CourseWithWarning(lecture: l)).toList(),
+    );
+  }
+
+  // ── Closed state helpers ─────────────────────────────────────────────────────
+
+  Future<void> _loadSemesterInfo() async {
+    semesterInfo.value = await _service.fetchSemesterInfo();
+  }
+
+  // ── Not-opened helpers ───────────────────────────────────────────────────────
+
+  Future<void> _loadBalanceInfo() async {
+    balanceInfo.value = await _service.fetchBalanceInfo();
+  }
+
+  // ── Actions ──────────────────────────────────────────────────────────────────
+
+  Future<void> confirmRegistration() async {
+    errorMessage.value = '';
+
+    // Validate: check for course warnings
+    final hasPrereqIssues =
+        scheduledCourses.any((c) => c.warningMessage != null);
+    if (hasPrereqIssues) {
+      errorMessage.value =
+          'Prerequisites are not met. Resolve issues before confirming.';
       return;
     }
 
-    switch (data.semester.status) {
-      case RegistrationStatus.open:
-        viewState.value = RegistrationViewState.open;
-        break;
-      case RegistrationStatus.closed:
-        viewState.value = RegistrationViewState.closed;
-        break;
-      case RegistrationStatus.notOpenedYet:
-      case RegistrationStatus.unpaidBalance:
-        viewState.value = RegistrationViewState.notOpened;
-        break;
+    isSubmitting.value = true;
+    try {
+      final success = await _service.submitRegistration(
+        groupId: selectedGroupId.value,
+        courseIds: selectedCourseIds.toList(),
+      );
+      if (success) {
+        Get.snackbar(
+          'Success',
+          'Registration confirmed!',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      errorMessage.value = 'Submission failed. Please try again.';
+    } finally {
+      isSubmitting.value = false;
     }
   }
+
+  Future<void> payNow() async {
+    isSubmitting.value = true;
+    try {
+      final url = await _service.initiatePayment(
+        amount: balanceInfo.value?.outstandingAmount ?? 0,
+      );
+      // TODO: launch URL in browser / WebView
+      Get.snackbar('Redirecting', 'Opening payment portal...',
+          snackPosition: SnackPosition.BOTTOM);
+    } catch (e) {
+      errorMessage.value = 'Payment initiation failed.';
+    } finally {
+      isSubmitting.value = false;
+    }
+  }
+
+  void clearError() => errorMessage.value = '';
+
+  // ── Computed helpers ─────────────────────────────────────────────────────────
+
+  int get totalCreditHours {
+    final group = availableGroups
+        .firstWhereOrNull((g) => g.id == selectedGroupId.value);
+    return group?.creditHours ?? 0;
+  }
+
+  bool get hasWarnings =>
+      scheduledCourses.any((c) => c.warningMessage != null);
+
+  CourseGroup? get selectedGroup =>
+      availableGroups.firstWhereOrNull((g) => g.id == selectedGroupId.value);
 }

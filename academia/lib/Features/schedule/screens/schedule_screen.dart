@@ -9,7 +9,6 @@ import '../widgets/class_card.dart';
 class ScheduleScreen extends StatelessWidget {
 final ScheduleController controller = Get.find<ScheduleController>();
 
-<<<<<<< HEAD
   ScheduleScreen({Key? key}) : super(key: key);
 
   @override
@@ -65,76 +64,6 @@ final ScheduleController controller = Get.find<ScheduleController>();
               ],
             ),
           ),
-=======
-  @override
-  State<ScheduleScreen> createState() => _ScheduleScreenState();
-}
-
-class _ScheduleScreenState extends State<ScheduleScreen> {
-  DateTime _selectedDate = DateTime(2025, 9, 9);
-
-  final List<ClassModel> _classes = const [
-    ClassModel(
-      title: 'Programming 1',
-      room: 'Room B1',
-      instructor: 'Dr. Ahmed Safwat',
-      startTime: '8:00',
-      endTime: '9:30',
-      type: 'Lecture',
-      accentColor: AppColors.accentProgramming1,
-    ),
-    ClassModel(
-      title: 'Introduction to AI',
-      room: 'Lab 1',
-      instructor: 'Mr. Ahmed Mohamed',
-      startTime: '9:30',
-      endTime: '11:00',
-      type: 'Section',
-      accentColor: AppColors.accentAI,
-    ),
-    ClassModel(
-      title: 'Data Structures',
-      room: 'Room B1',
-      instructor: 'Dr. Marwa Ahmed',
-      startTime: '11:00',
-      endTime: '12:30',
-      type: 'Lecture',
-      accentColor: AppColors.accentProgramming1,
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Calendar
-            CalendarWidget(
-              selectedDate: _selectedDate,
-              onDateSelected: (date) {
-                setState(() {
-                  _selectedDate = date;
-                });
-              },
-            ),
-
-            const SizedBox(height: 24),
-
-            // Title
-            Text(
-              'Classes',
-              style: TextStyles.header2,
-            ),
-
-            const SizedBox(height: 16),
-
-            // Class list
-            ..._classes.map((c) => ClassCardWidget(classModel: c)),
-          ],
->>>>>>> e6de1517c0e51933661f01880382ad2c277a2a63
         ),
       ),
     );

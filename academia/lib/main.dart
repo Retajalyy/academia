@@ -7,7 +7,7 @@ import 'package:academia/Features/Course/screens/CourseScreen.dart';
 import 'package:academia/Features/Fees/screens/FeesScreen.dart';
 import 'package:academia/Features/Payement/screens/PayementScreen.dart';
 import 'package:academia/Features/Registiration_admin/screens/NoRegistirationScreen.dart';
-import 'package:academia/Features/Registration/screens/registration_screen.dart';
+import 'package:academia/Features/Registration/screens/registration_screen.dart' hide RegistrationScreen;
 import 'package:academia/Features/Services/screens/services_main_screen.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
 import 'package:academia/Features/noexam_schedule/screens/exam_Schedule_screen2.dart';
@@ -17,14 +17,13 @@ import 'package:academia/Features/schedule/screens/schedule_screen.dart';
 import 'Features/Dashboard_admin/screens/Dashboard_screen.dart';
 import 'Features/AccountSettings_admin/screens/AccountSettingScreen.dart';
 import 'Features/plan_admin/screens/PlanAdminScreen.dart';
-<<<<<<< HEAD
-import 'Features/plan_admin2/screens/PlanAdmin2Screen .dart';
-import 'Features/plan_admin3/screens/PlanAdmin3Screen .dart';
+
+
 
 import 'Features/Registiration_admin/screens/RegistirationScreen.dart';
-=======
+
 import 'Features/Registiration_admin/screens/RegistirationScreen.dart' hide RegistrationScreen;
->>>>>>> e6de1517c0e51933661f01880382ad2c277a2a63
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

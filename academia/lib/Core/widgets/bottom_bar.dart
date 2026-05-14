@@ -4,12 +4,8 @@ import 'package:academia/Features/Services/screens/services_main_screen.dart';
 import 'package:academia/Features/Schedule/controller/schedule_controller.dart';
 import 'package:academia/Features/profile/screens/profile_page.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-=======
+
 import 'package:flutter_svg/flutter_svg.dart';
->>>>>>> e6de1517c0e51933661f01880382ad2c277a2a63
 
 class BottomBar extends StatefulWidget {
   final int initialIndex;
@@ -23,12 +19,6 @@ class BottomBar extends StatefulWidget {
   State<BottomBar> createState() => _BottomBarState();
 }
 
-<<<<<<< HEAD
-class _MainLayoutState extends State<BottomBar> {
-  int currentIndex = 0;
-  final scheduleController = Get.put(ScheduleController());
-
-=======
 class _BottomBarState extends State<BottomBar> {
   late int currentIndex;
 
@@ -37,7 +27,6 @@ class _BottomBarState extends State<BottomBar> {
     super.initState();
     currentIndex = widget.initialIndex;
   }
->>>>>>> e6de1517c0e51933661f01880382ad2c277a2a63
 
   final List<Widget> pages = [
     const HomePage(),

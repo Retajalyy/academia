@@ -10,8 +10,8 @@ import 'package:academia/Features/Registiration_admin/screens/NoRegistirationScr
 import 'package:academia/Features/Registration/screens/registration_screen.dart' hide RegistrationScreen;
 import 'package:academia/Features/Services/screens/services_main_screen.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
-import 'package:academia/Features/Exam_schedule/screens/exam_Schedule_screen2.dart';
 import 'package:academia/Features/Exam_schedule/screens/exam_Schedule_screen.dart';
+import 'package:academia/Features/Exam_schedule/screens/no_exam_screen.dart';
 import 'package:academia/Features/profile/screens/profile_page.dart';
 import 'package:academia/Features/schedule/screens/schedule_screen.dart';
 import 'Features/Dashboard_admin/screens/Dashboard_screen.dart';
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 👇 start from splash instead of home
-      initialRoute: '/app',
+      initialRoute: '/exam',
 
       // 👇 routes
       getPages: [
@@ -89,11 +89,11 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/noexam',
-          page: () => ExamScheduleScreen(),
+          page: () => NoExamScheduleScreen(),
         ),
         GetPage(
           name: '/exam',
-          page: () => ExamScheduleScreen2(),
+          page: () => ExamScheduleScreen(),
         ),
         GetPage(
           name: '/assesments',

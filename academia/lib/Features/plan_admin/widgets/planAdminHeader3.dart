@@ -1,14 +1,19 @@
+// lib/Features/plan_admin/widgets/planAdminHeader3.dart
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../Core/utilities/colors.dart';
 import 'package:academia/Core/widgets/Architecture_progress.dart';
-import 'package:academia/Features/plan_admin2/screens/PlanAdmin2Screen .dart';
-
+import 'package:academia/Features/plan_admin/screens/PlanAdmin2Screen .dart';
 class PlanHeader3 extends StatelessWidget {
-  final int currentStep;
+  // Changed: accepts reactive activeTab and onTabSelected from controller
+  final RxString activeTab;
+  final void Function(String tab) onTabSelected;
 
   const PlanHeader3({
     super.key,
-    required this.currentStep,
+    required this.activeTab,
+    required this.onTabSelected,
   });
 
   @override
@@ -16,7 +21,6 @@ class PlanHeader3 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// BLUE HEADER CONTAINER
         Stack(
           clipBehavior: Clip.none,
           children: [
@@ -37,7 +41,6 @@ class PlanHeader3 extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  /// TOP ROW (BACK BUTTON ONLY)
                   Row(
                     children: [
                       GestureDetector(
@@ -60,7 +63,6 @@ class PlanHeader3 extends StatelessWidget {
 
                   const SizedBox(height: 10),
 
-                  /// CENTER TITLE
                   const Center(
                     child: Text(
                       "New Semester Plan",
@@ -75,27 +77,31 @@ class PlanHeader3 extends StatelessWidget {
 
                   const SizedBox(height: 24),
 
-                  /// PROGRESS BAR
-                  ArchitectureProgress(
-                    currentStep: currentStep,
-                  ),
+                  const ArchitectureProgress(currentStep: 3),
                 ],
               ),
             ),
 
-            /// SE TABS — overlapping the bottom edge of the blue container
+            /// SE TABS — reactive
             Positioned(
               bottom: -24,
               left: 16,
-              child: Row(
-                children: [
-                  _SETab(label: 'SE1', isActive: true),
-                  const SizedBox(width: 40),
-                  _SETab(label: 'SE2', isActive: false),
-                  const SizedBox(width: 40),
-                  _SETab(label: 'SE3', isActive: false),
-                ],
-              ),
+              child: Obx(() {
+                return Row(
+                  children: ['SE1', 'SE2', 'SE3'].map((tab) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 40),
+                      child: GestureDetector(
+                        onTap: () => onTabSelected(tab),
+                        child: _SETab(
+                          label: tab,
+                          isActive: activeTab.value == tab,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                );
+              }),
             ),
           ],
         ),
@@ -110,10 +116,7 @@ class _SETab extends StatelessWidget {
   final String label;
   final bool isActive;
 
-  const _SETab({
-    required this.label,
-    required this.isActive,
-  });
+  const _SETab({required this.label, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
@@ -122,13 +125,12 @@ class _SETab extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: isActive ? AppColors.accentAI : Color(0XFF87A8C4),
+            color: isActive ? AppColors.accentAI : const Color(0XFF87A8C4),
             fontSize: 17,
             fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
           ),
         ),
         const SizedBox(height: 4),
-        /// yellow underline aligns with bottom of blue container
         Container(
           height: 3,
           width: 50,

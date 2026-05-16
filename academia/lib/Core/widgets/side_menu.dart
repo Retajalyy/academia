@@ -2,7 +2,7 @@ import 'package:academia/Features/Registiration_admin/screens/NoRegistirationScr
 import 'package:flutter/material.dart';
 import '../utilities/colors.dart';
 import 'package:academia/Features/Dashboard_admin/screens/Dashboard_screen.dart';
-
+import 'package:academia/Features/Fees_admin/screens/FeesAdminScreen.dart';
 class SideMenu extends StatefulWidget {
   final String activeItem;
 
@@ -145,7 +145,7 @@ class _SideMenuState extends State<SideMenu> {
                         icon: Icons.edit_square,
                         title: "Registration",
                         active: widget.activeItem == "Registration",
-                        onTap: () => _navigate(context, const NoRegistrationScreen()),
+                        onTap: () => _navigate(context, const NoRegistrationAdminScreen()),
                       ),
 
                       /// ACADEMIC WITH EXPAND
@@ -196,9 +196,7 @@ class _SideMenuState extends State<SideMenu> {
                         icon: Icons.credit_card_outlined,
                         title: "Fees & Payments",
                         active: widget.activeItem == "Fees & Payments",
-                        onTap: () {
-                          // _navigate(context, const FeesScreen());
-                        },
+                        onTap: () => _navigate(context, const FeesAdminScreen()),
                       ),
 
                       /// SCHEDULES WITH EXPAND

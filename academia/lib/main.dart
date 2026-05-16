@@ -7,7 +7,7 @@ import 'package:academia/Features/Course/screens/CourseScreen.dart';
 import 'package:academia/Features/Fees/screens/FeesScreen.dart';
 import 'package:academia/Features/Payement/screens/PayementScreen.dart';
 import 'package:academia/Features/Registiration_admin/screens/NoRegistirationScreen.dart';
-import 'package:academia/Features/Registration/screens/registration_screen.dart' hide RegistrationScreen;
+import 'package:academia/Features/Registration/screens/registration_screen.dart';
 import 'package:academia/Features/Services/screens/services_main_screen.dart';
 import 'package:academia/Features/Splash/screens/splash_screen.dart';
 import 'package:academia/Features/Exam_schedule/screens/exam_Schedule_screen.dart';
@@ -17,8 +17,9 @@ import 'package:academia/Features/schedule/screens/schedule_screen.dart';
 import 'Features/Dashboard_admin/screens/Dashboard_screen.dart';
 import 'Features/AccountSettings_admin/screens/AccountSettingScreen.dart';
 import 'Features/plan_admin/screens/PlanAdminScreen.dart';
-
-
+import 'Features/plan_admin/screens/PlanAdmin2Screen .dart';
+import 'Features/plan_admin/screens/PlanAdmin3Screen .dart';
+import 'Features/Fees_admin/screens/FeesAdminScreen.dart';
 
 import 'Features/Registiration_admin/screens/RegistirationScreen.dart';
 
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 👇 start from splash instead of home
-      initialRoute: '/exam',
+      initialRoute: '/FeeAdmin',
 
       // 👇 routes
       getPages: [
@@ -147,17 +148,28 @@ class MyApp extends StatelessWidget {
         ),
          GetPage(
           name: '/NoregistirationAdmin',
-          page: () => NoRegistrationScreen(),
+          page: () => NoRegistrationAdminScreen(),
         ),
           GetPage(
           name: '/registirationAdmin',
-          page: () => RegistrationScreen(), 
+          page: () => RegistrationAdminScreen(), 
         ),
          GetPage(
           name: '/planAdmin1',
           page: () => Planadminscreen1(), 
         ),
-        
+        GetPage(
+          name: '/planAdmin2',
+          page: () => Planadminscreen2(), 
+        ),
+         GetPage(
+          name: '/planAdmin3',
+          page: () => Planadminscreen3(), 
+        ),
+        GetPage(
+          name: '/FeeAdmin',
+          page: () => FeesAdminScreen(), 
+        ),
         GetPage(
   name: '/app',
   page: () => const BottomBar(),

@@ -1,6 +1,11 @@
+// lib/Features/plan_admin/widgets/save_button.dart
+
 import 'package:flutter/material.dart';
 import '../../../Core/utilities/colors.dart';
-import 'package:academia/Features/plan_admin3/screens/PlanAdmin3Screen .dart';
+import '../controller/plan_admin_controller.dart';
+import '../screens/PlanAdmin3Screen .dart';
+import 'package:get/get.dart';
+
 class SaveButton extends StatelessWidget {
   const SaveButton({super.key});
 
@@ -11,7 +16,7 @@ class SaveButton extends StatelessWidget {
       height: 45,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) => const Planadminscreen3(),
@@ -23,9 +28,7 @@ class SaveButton extends StatelessWidget {
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(
-              color: Color(0x12000000), // black 7%
-            ),
+            side: const BorderSide(color: Color(0x12000000)),
           ),
         ),
         child: const Text(
